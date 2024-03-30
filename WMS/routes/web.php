@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('app');
 });
 
 Route::get("/greet", [AccountController::class, "greet"]);
