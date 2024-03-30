@@ -10,3 +10,5 @@ Route::get('/', function () {
 Route::get("/greet", [AccountController::class, "greet"]);
 
 Route::get("/login", [AccountController::class, "login"]);
+
+Route::get("/register", [AccountController::class, "register"]);
