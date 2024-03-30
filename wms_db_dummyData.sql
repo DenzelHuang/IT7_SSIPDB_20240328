@@ -1,3 +1,5 @@
+CREATE DATABASE wms_project;
+
 CREATE TABLE product(
     product_id INT AUTO_INCREMENT NOT NULL,
     product_name VARCHAR(150) NOT NULL,
