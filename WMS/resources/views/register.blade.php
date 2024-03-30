@@ -1,3 +1,9 @@
+<link href="{{ asset('css/Stylesheet.css') }}" rel="stylesheet">
+<head>
+    <title>Register</title>
+</head>
 <div>
-    <!-- Because you are alive, everything is possible. - Thich Nhat Hanh -->
+    @include('header')
+    <h3>Login Page</h3>
+    @include('footer')
 </div>
