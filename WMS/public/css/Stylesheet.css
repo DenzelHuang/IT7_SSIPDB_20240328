@@ -1,0 +1,36 @@
+
+/* Register */
+.register-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+.reg-box {
+    padding: 20px;
+    border: 1px solid black;
+    width: 50%;
+    max-width: 500px;
+    background-color: ghostwhite;
+    border-radius: 20px;
+}
+.reg-box form {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+.reg-box form input {
+    margin-bottom: 5px;
+}
+.reg-birth-label {
+    font-size: medium;
+}
+.register-birth {
+    display: flex;
+    gap: 5px;
+}
+.reg-birth-form {
+    width: 100%;
+    height: 35px;
+}
