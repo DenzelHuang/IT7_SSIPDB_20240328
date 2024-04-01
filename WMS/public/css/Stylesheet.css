@@ -1,3 +1,6 @@
+* {
+    box-sizing: border-box;
+}
 
 /* Accounts */
 .accounts-body {
@@ -19,4 +22,8 @@
 }
 .account-list * {
     border: 1px solid black;
+}
+table {
+    width: 100%;
+    align-items: center;
 }
