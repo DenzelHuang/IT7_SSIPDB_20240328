@@ -25,5 +25,10 @@
 }
 table {
     width: 100%;
-    align-items: center;
+}
+th, td {
+    text-align: center;
+}
+body {
+    color: red;
 }
