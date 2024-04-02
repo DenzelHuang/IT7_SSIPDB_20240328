@@ -7,8 +7,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get("/greet", [AccountController::class, "greet"]);
-
-Route::get("/login", [AccountController::class, "login"]);
-
-Route::get("/accounts", [AccountController::class, "accounts"]);
+Route::get("/account/greet", [AccountController::class, "greet"]);
+Route::get("/account/login", [AccountController::class, "login"]);
+Route::get("/account/edit", [AccountController::class, "edit"]);
