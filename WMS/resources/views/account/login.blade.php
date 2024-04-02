@@ -6,25 +6,53 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <link rel="stylesheet" href="../css/Stylesheet.css">
     <style>
-        /* Some custom styles to beautify this example */
-        .bd-highlight{
-            background: #dbdfe5;
-            min-height: 300px;
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .box{
-            padding: 25px;
-            background: #abb1b8;
+        .form-container {
+            width: 400px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            padding: 3%;
+        }
+        button {
+            width: 94%;
+            margin-top: 4%;
+        }
+        .h1 {
+            color: white;
+            text-shadow: 0px 0px 5px black;
         }
     </style>
 </head>
 <body>
-    <div class="m-3" style="">
-        <div class="d-flex align-items-center bd-highlight">
-            <div class="box w-100">Vertical Center Aligned Div</div>
-        </div>
+    <div class="container text-center">
+        <p class="h1">WMS Login</p>
+        <div class="form-container">
+            <form class="form" method="POST">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control border-3" id="username" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control border-3" id="password" placeholder="Enter password">
+                </div>
+                <button type="button" class="btn btn-secondary">Submit</button>
+            </form>
+        </div>    
     </div>
-        {{-- <form>
+    {{-- <form>
         <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
     
         <div class="form-floating">

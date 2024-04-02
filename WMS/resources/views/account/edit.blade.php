@@ -5,7 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accounts</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <link rel="stylesheet" href="css/Stylesheet.css">
+    <link rel="stylesheet" href="../css/Stylesheet.css">
+    <style>
+        /* Accounts */
+        .accounts-body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            align-items: center;
+        }
+        .account-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid black;
+            width: 50%;
+            max-width: 500px;
+            background-color: ghostwhite;
+            border-radius: 20px;
+        }
+        .account-list * {
+            border: 1px solid black;
+        }
+        table {
+            width: 100%;
+        }
+        th, td {
+            text-align: center;
+        }
+        body {
+            color: red;
+        }
+    </style>
 </head> 
 <body class="accounts-body">
     @include('header')
