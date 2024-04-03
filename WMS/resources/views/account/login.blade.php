@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <link rel="stylesheet" href="../css/Stylesheet.css">
+    <link rel="stylesheet" href="{{ asset('css/Stylesheet.css') }}">
     <style>
         html, body {
             height: 100%;
