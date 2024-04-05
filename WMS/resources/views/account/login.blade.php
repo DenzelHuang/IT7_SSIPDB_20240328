@@ -39,16 +39,17 @@
     <div class="container text-center">
         <p class="h1">WMS Login</p>
         <div class="form-container">
-            <form class="form" method="POST">
+            <form class="form" action="account/login" method="post">
+                @csrf
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control border-3" id="username" placeholder="Enter username">
+                    <input type="text" class="form-control border-3" id="username" placeholder="Enter username" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control border-3" id="password" placeholder="Enter password">
+                    <input type="password" class="form-control border-3" id="password" placeholder="Enter password" required>
                 </div>
-                <button type="button" class="btn btn-secondary">Submit</button>
+                <button type="submit" class="btn btn-secondary">Submit</button>
             </form>
         </div>    
     </div>
