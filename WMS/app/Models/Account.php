@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 
-class Accounts extends Model
+
+class Account extends Model
 {
     use HasFactory;
 
-    protected $table = 'account';
+    protected $table = 'accounts';
 
     protected $fillable = [
         'username', 'password'

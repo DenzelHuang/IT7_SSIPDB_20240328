@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Accounts;
+use App\Models\Account;
 use Illuminate\Http\Request;
 
-class AccountsController extends Controller
+class AccountController extends Controller
 {
     public function greet() {
         return "Hello from AccountsController";
@@ -24,7 +24,7 @@ class AccountsController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
 
-        $account = Accounts::where('username', $username)->first();
+        $account = Account::where('username', $username)->first();
 
         if ($account && $password === $account->password) {
             // The username and password match, you can authenticate the user here

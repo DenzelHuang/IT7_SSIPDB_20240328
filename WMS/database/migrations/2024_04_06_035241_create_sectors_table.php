@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sector', function (Blueprint $table) {
+        Schema::create('sectors', function (Blueprint $table) {
             $table->unsignedInteger('sector_id')->autoIncrement();
             $table->unsignedInteger('location_id')->notNullable();
-            $table->foreign('location_id')->references('location_id')->on('location');
+            $table->foreign('location_id')->references('location_id')->on('locations');
         });
     }
-    
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('sector');
+        Schema::dropIfExists('sectors');
     }
 };

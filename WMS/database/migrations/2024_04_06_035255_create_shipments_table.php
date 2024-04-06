@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shipment', function (Blueprint $table) {
+        Schema::create('shipments', function (Blueprint $table) {
             $table->unsignedInteger('shipment_id')->autoIncrement();
             $table->unsignedInteger('product_id')->notNullable();
             $table->unsignedInteger('product_quantity')->notNullable();
@@ -21,11 +21,11 @@ return new class extends Migration
             $table->unsignedInteger('origin_sector')->nullable();
             $table->unsignedInteger('target_location')->nullable();
             $table->unsignedInteger('target_sector')->nullable();
-            $table->foreign('product_id')->references('product_id')->on('product');
-            $table->foreign('origin_location')->references('location_id')->on('location');
-            $table->foreign('origin_sector')->references('sector_id')->on('sector');
-            $table->foreign('target_location')->references('location_id')->on('location');
-            $table->foreign('target_sector')->references('sector_id')->on('sector');
+            $table->foreign('product_id')->references('product_id')->on('products');
+            $table->foreign('origin_location')->references('location_id')->on('locations');
+            $table->foreign('origin_sector')->references('sector_id')->on('sectors');
+            $table->foreign('target_location')->references('location_id')->on('locations');
+            $table->foreign('target_sector')->references('sector_id')->on('sectors');
         });
     }
 
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shipment');
+        Schema::dropIfExists('shipments');
     }
 };

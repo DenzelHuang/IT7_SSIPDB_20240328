@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('product', function (Blueprint $table) {
-            $table->string('product_image')->nullable();
+        Schema::create('locations', function (Blueprint $table) {
+            $table->unsignedInteger('location_id')->autoIncrement();
+            $table->string('location_name', 150)->notNullable()->unique();
         });
     }
 
@@ -21,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('product', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('locations');
     }
 };

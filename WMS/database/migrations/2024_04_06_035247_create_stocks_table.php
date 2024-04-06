@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stock', function (Blueprint $table) {
+        Schema::create('stocks', function (Blueprint $table) {
             $table->unsignedInteger('product_id')->notNullable();
             $table->unsignedInteger('product_quantity')->notNullable();
             $table->unsignedInteger('location_id')->notNullable();
             $table->unsignedInteger('sector_id')->notNullable();
-            $table->foreign('product_id')->references('product_id')->on('product');
-            $table->foreign('location_id')->references('location_id')->on('location');
-            $table->foreign('sector_id')->references('sector_id')->on('sector');
+            $table->foreign('product_id')->references('product_id')->on('products');
+            $table->foreign('location_id')->references('location_id')->on('locations');
+            $table->foreign('sector_id')->references('sector_id')->on('sectors');
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock');
+        Schema::dropIfExists('stocks');
     }
 };

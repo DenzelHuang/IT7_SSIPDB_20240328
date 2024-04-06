@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('location', function (Blueprint $table) {
-            $table->unsignedInteger('location_id')->autoIncrement();
-            $table->string('location_name', 150)->notNullable()->unique();
+        Schema::create('accounts', function (Blueprint $table) {
+            $table->unsignedInteger('user_id')->autoIncrement();
+            $table->string('username');
+            $table->string('password');
         });
     }
-    
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('location');
+        Schema::dropIfExists('accounts');
     }
 };

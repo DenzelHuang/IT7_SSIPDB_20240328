@@ -1,26 +1,26 @@
 CREATE DATABASE wms_project;
 
-CREATE TABLE product(
+CREATE TABLE products(
     product_id INT AUTO_INCREMENT NOT NULL,
     product_name VARCHAR(150) NOT NULL,
     CONSTRAINT pk_product_id PRIMARY KEY (product_id)
 );
 
 
-CREATE TABLE location(
+CREATE TABLE locations(
     location_id INT AUTO_INCREMENT NOT NULL,
     location_name VARCHAR(150) NOT NULL,
     CONSTRAINT pk_location_id PRIMARY KEY (location_id)
 );
 
-CREATE TABLE sector(
+CREATE TABLE sectors(
     sector_id INT AUTO_INCREMENT NOT NULL,
     location_id INT NOT NULL,
     CONSTRAINT pk_sector_id PRIMARY KEY (sector_id),
     CONSTRAINT fk_sector_location_id FOREIGN KEY (location_id) REFERENCES location(location_id)
 );
 
-CREATE TABLE stock(
+CREATE TABLE stocks(
     product_id INT NOT NULL,
     product_quantity INT NOT NULL,
     location_id INT NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE stock(
     CONSTRAINT fk_stock_sector_id FOREIGN KEY (sector_id) REFERENCES sector(sector_id)
 );
 
-CREATE TABLE shipment(
+CREATE TABLE shipments(
     shipment_id INT AUTO_INCREMENT NOT NULL,
     product_id INT NOT NULL,
     product_quantity INT NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE shipment(
     CONSTRAINT fk_shipment_target_sector FOREIGN KEY (target_sector) REFERENCES sector (sector_id)
 );
 
-CREATE TABLE monitoring(
+CREATE TABLE monitorings(
     product_id INT NOT NULL,
     product_quantity INT NOT NULL,
     origin_location INT,
@@ -63,79 +63,79 @@ CREATE TABLE monitoring(
     CONSTRAINT fk_monitoring_target_sector FOREIGN KEY (target_sector) REFERENCES sector(sector_id)
 );
 
-CREATE TABLE account(
+CREATE TABLE accounts(
     user_id INT AUTO_INCREMENT NOT NULL,
     username VARCHAR(50) NOT NULL,
     password VARCHAR(100) NOT NULL,
     CONSTRAINT pk_user_id PRIMARY KEY (user_id)
 );
 
-INSERT INTO product (product_name) VALUES ('Assorted Metal Shavings - 1 kg bag');
-INSERT INTO product (product_name) VALUES ('Plywood Sheet - 100x100x1 cm');
-INSERT INTO product (product_name) VALUES ('Hydrogen Peroxide - 1 L bottle');
-INSERT INTO product (product_name) VALUES ('Steel Filings - 500g bag');
-INSERT INTO product (product_name) VALUES ('Hardwood Plank - 50x50x1 cm');
-INSERT INTO product (product_name) VALUES ('Industrial Cleaning Solution - 2 L bottle');
-INSERT INTO product (product_name) VALUES ('Mixed Metal Alloys - 750g bag');
-INSERT INTO product (product_name) VALUES ('Lumber Block - 25x25x1 cm ');
-INSERT INTO product (product_name) VALUES ('Acidic Solution - 500 ml bottle');
-INSERT INTO product (product_name) VALUES ('Brass Shavings - 250g bag');
-INSERT INTO product (product_name) VALUES ('Laminated Particle Board - 75x75x1 cm');
-INSERT INTO product (product_name) VALUES ('Solvent Solution - 1 L bottle');
-INSERT INTO product (product_name) VALUES ('Copper Shavings - 500g bag');
-INSERT INTO product (product_name) VALUES ('Panel Board - 120x60x1 cm');
-INSERT INTO product (product_name) VALUES ('Oxidizing Agent - 750 ml bottle');
+INSERT INTO products (product_name) VALUES ('Assorted Metal Shavings - 1 kg bag');
+INSERT INTO products (product_name) VALUES ('Plywood Sheet - 100x100x1 cm');
+INSERT INTO products (product_name) VALUES ('Hydrogen Peroxide - 1 L bottle');
+INSERT INTO products (product_name) VALUES ('Steel Filings - 500g bag');
+INSERT INTO products (product_name) VALUES ('Hardwood Plank - 50x50x1 cm');
+INSERT INTO products (product_name) VALUES ('Industrial Cleaning Solution - 2 L bottle');
+INSERT INTO products (product_name) VALUES ('Mixed Metal Alloys - 750g bag');
+INSERT INTO products (product_name) VALUES ('Lumber Block - 25x25x1 cm ');
+INSERT INTO products (product_name) VALUES ('Acidic Solution - 500 ml bottle');
+INSERT INTO products (product_name) VALUES ('Brass Shavings - 250g bag');
+INSERT INTO products (product_name) VALUES ('Laminated Particle Board - 75x75x1 cm');
+INSERT INTO products (product_name) VALUES ('Solvent Solution - 1 L bottle');
+INSERT INTO products (product_name) VALUES ('Copper Shavings - 500g bag');
+INSERT INTO products (product_name) VALUES ('Panel Board - 120x60x1 cm');
+INSERT INTO products (product_name) VALUES ('Oxidizing Agent - 750 ml bottle');
 
-INSERT INTO location (location_name) VALUES ('Jakarta');
-INSERT INTO location (location_name) VALUES ('Surabaya');
-INSERT INTO location (location_name) VALUES ('Bandung');
+INSERT INTO locations (location_name) VALUES ('Jakarta');
+INSERT INTO locations (location_name) VALUES ('Surabaya');
+INSERT INTO locations (location_name) VALUES ('Bandung');
 
-INSERT INTO sector (location_id) VALUES (1);
-INSERT INTO sector (location_id) VALUES (1);
-INSERT INTO sector (location_id) VALUES (1);
-INSERT INTO sector (location_id) VALUES (2);
-INSERT INTO sector (location_id) VALUES (2);
-INSERT INTO sector (location_id) VALUES (2);
-INSERT INTO sector (location_id) VALUES (3);
-INSERT INTO sector (location_id) VALUES (3);
-INSERT INTO sector (location_id) VALUES (3);
+INSERT INTO sectors (location_id) VALUES (1);
+INSERT INTO sectors (location_id) VALUES (1);
+INSERT INTO sectors (location_id) VALUES (1);
+INSERT INTO sectors (location_id) VALUES (2);
+INSERT INTO sectors (location_id) VALUES (2);
+INSERT INTO sectors (location_id) VALUES (2);
+INSERT INTO sectors (location_id) VALUES (3);
+INSERT INTO sectors (location_id) VALUES (3);
+INSERT INTO sectors (location_id) VALUES (3);
 
-INSERT INTO account (username, password) VALUES ('denzel', 'admin');
-INSERT INTO account (username, password) VALUES ('diego', 'admin');
-INSERT INTO account (username, password) VALUES ('sarah', 'admin');
+INSERT INTO accounts (username, password) VALUES ('denzel', 'admin');
+INSERT INTO accounts (username, password) VALUES ('diego', 'admin');
+INSERT INTO accounts (username, password) VALUES ('sarah', 'admin');
 
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (1, 10, '2024-01-01', 'IN', '1', '1');
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (2, 10, '2024-01-01', 'IN', '1', '1');
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (3, 10, '2024-01-01', 'IN', '1', '2');
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (4, 10, '2024-01-01', 'IN', '1', '2');
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (5, 10, '2024-01-01', 'IN', '1', '3');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (1, 10, '2024-01-01', 'IN', '1', '1');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (2, 10, '2024-01-01', 'IN', '1', '1');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (3, 10, '2024-01-01', 'IN', '1', '2');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (4, 10, '2024-01-01', 'IN', '1', '2');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (5, 10, '2024-01-01', 'IN', '1', '3');
 
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (6, 10, '2024-01-01', 'IN', '2', '4');
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (7, 10, '2024-01-01', 'IN', '2', '4');
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (8, 10, '2024-01-01', 'IN', '2', '5');
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (9, 10, '2024-01-01', 'IN', '2', '5');
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (10, 10, '2024-01-01', 'IN', '2', '6');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (6, 10, '2024-01-01', 'IN', '2', '4');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (7, 10, '2024-01-01', 'IN', '2', '4');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (8, 10, '2024-01-01', 'IN', '2', '5');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (9, 10, '2024-01-01', 'IN', '2', '5');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (10, 10, '2024-01-01', 'IN', '2', '6');
 
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (12, 10, '2024-01-01', 'IN', '3', '7');
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (11, 10, '2024-01-01', 'IN', '3', '7');
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (13, 10, '2024-01-01', 'IN', '3', '8');
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (14, 10, '2024-01-01', 'IN', '3', '8');
-INSERT INTO shipment (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (15, 10, '2024-01-01', 'IN', '3', '9');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (12, 10, '2024-01-01', 'IN', '3', '7');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (11, 10, '2024-01-01', 'IN', '3', '7');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (13, 10, '2024-01-01', 'IN', '3', '8');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (14, 10, '2024-01-01', 'IN', '3', '8');
+INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (15, 10, '2024-01-01', 'IN', '3', '9');
 
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (1, 10, 1, 1);
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (2, 10, 1, 1);
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (3, 10, 1, 2);
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (4, 10, 1, 2);
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (5, 10, 1, 3);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (1, 10, 1, 1);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (2, 10, 1, 1);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (3, 10, 1, 2);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (4, 10, 1, 2);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (5, 10, 1, 3);
 
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (6, 10, 2, 4);
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (7, 10, 2, 4);
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (8, 10, 2, 5);
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (9, 10, 2, 5);
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (10, 10, 2, 6);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (6, 10, 2, 4);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (7, 10, 2, 4);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (8, 10, 2, 5);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (9, 10, 2, 5);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (10, 10, 2, 6);
 
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (11, 10, 3, 7);
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (12, 10, 3, 7);
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (13, 10, 3, 8);
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (14, 10, 3, 8);
-INSERT INTO stock (product_id, product_quantity, location_id, sector_id) VALUES (15, 10, 3, 9);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (11, 10, 3, 7);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (12, 10, 3, 7);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (13, 10, 3, 8);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (14, 10, 3, 8);
+INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (15, 10, 3, 9);
