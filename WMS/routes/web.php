@@ -11,7 +11,7 @@ Route::get('/', function () {
 
 Route::get("/account/greet", [AccountController::class, "greet"]);
 Route::get('/login', [AccountController::class, 'login'])->name('login');
-Route::post('/account/login', [AccountController::class, 'loginCheck']);
+Route::post('/account/check', [AccountController::class, 'loginCheck']);
 Route::get("/account/edit", [AccountController::class, "edit"]);
 
 Route::get("/home", [NavigationController::class, "home"]);

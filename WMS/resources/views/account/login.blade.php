@@ -39,43 +39,20 @@
     <div class="container text-center">
         <p class="h1">WMS Login</p>
         <div class="form-container">
-            <form class="form" action="account/login" method="post">
+            <form class="form" action="account/check" method="post">
                 @csrf
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control border-3" id="username" placeholder="Enter username" required>
+                    <input type="text" class="form-control border-3" name="username" placeholder="Enter username" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control border-3" id="password" placeholder="Enter password" required>
+                    <input type="password" class="form-control border-3" name="password" placeholder="Enter password" required>
                 </div>
-                <button type="submit" class="btn btn-secondary">Submit</button>
+                <button type="submit" class="btn btn-secondary" name="submit" value="Submit">Submit</button>
             </form>
         </div>    
     </div>
-    {{-- <form>
-        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-    
-        <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Email address</label>
-        </div>
-        <br>
-        <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Password</label>
-        </div>
-    
-        <div class="form-check text-start my-3">
-            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-            Remember me
-            </label>
-        </div>
-        <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
-        <p class="mt-5 mb-3 text-body-secondary">© 2017–2024</p>
-    </form> --}}
-
 </body>
 </html>
 
