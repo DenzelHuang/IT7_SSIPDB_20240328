@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AccountsController;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\ProductController;
 
@@ -9,10 +9,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get("/account/greet", [AccountsController::class, "greet"]);
-Route::get('/login', [AccountsController::class, 'login'])->name('login');
-Route::post('/account/login', [AccountsController::class, 'loginCheck']);
-Route::get("/account/edit", [AccountsController::class, "edit"]);
+Route::get("/account/greet", [AccountController::class, "greet"]);
+Route::get('/login', [AccountController::class, 'login'])->name('login');
+Route::post('/account/login', [AccountController::class, 'loginCheck']);
+Route::get("/account/edit", [AccountController::class, "edit"]);
 
 Route::get("/home", [NavigationController::class, "home"]);
 
