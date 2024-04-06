@@ -5,22 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class ProductImage extends Model
 {
     use HasFactory;
 
-    protected $table = 'products';
+    protected $table = 'productimages';
 
     protected $primaryKey = 'product_id';
 
     protected $fillable = [
-        'product_name',// Add any other columns you want to be fillable
+        'product_id', 'product_image'// Add any other columns you want to be fillable
     ];
 
     public $timestamps = false; // Disable timestamps
 
-    public function productImage()
+    public function product()
     {
-        return $this->hasOne(ProductImage::class, 'product_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
+
 }

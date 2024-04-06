@@ -20,7 +20,7 @@ Route::get('/error', function() {
     return view('error');
 });
 
-Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products', [ProductController::class, 'index'])->name('product.index');
 
 Route::get('/products/{productId}/edit', [ProductController::class, 'edit'])->name('product.edit');
 Route::put('/products/{productId}', [ProductController::class, 'update'])->name('product.update');

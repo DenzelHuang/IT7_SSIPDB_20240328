@@ -20,6 +20,13 @@
 <body>
     <div class="container my-5">
         <h1 class="text-center mb-4">Products</h1>
+        <!-- Add search input field -->
+        <form action="{{ route('product.index') }}" method="GET" class="mb-4">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search by product name" name="search">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </form>
         <div class="row">
             @foreach ($products as $product)
                 <div class="col-lg-4 mb-4">
@@ -27,7 +34,11 @@
                         <div class="card-body d-flex flex-column"> <!-- Use flexbox to make card body fill available space -->
                             <h5 class="card-title">{{ $product->product_name }}</h5>
                             <div class="d-flex align-items-center justify-content-center" style="height: 100%;">
-                                <img src="{{ asset('storage/' . $product->product_image) }}" alt="Product Image" class="img-fluid w-100"> <!-- Set width to 100% to ensure image fills its container -->
+                                @if($product->productImage)
+                                    <img src="{{ asset('storage/' . $product->productImage->product_image) }}" alt="Product Image" class="img-fluid">
+                                @else
+                                    <span>No image available</span>
+                                @endif
                             </div>
                             <div class="mt-auto"> <!-- Use mt-auto to push the buttons to the bottom -->
                                 <a href="{{ route('product.edit', ['productId' => $product->product_id]) }}" class="btn btn-primary">Edit</a>
