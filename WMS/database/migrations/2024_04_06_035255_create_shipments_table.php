@@ -13,15 +13,12 @@ return new class extends Migration
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->unsignedInteger('shipment_id')->autoIncrement();
-            $table->unsignedInteger('product_id')->notNullable();
-            $table->unsignedInteger('product_quantity')->notNullable();
             $table->date('shipment_date')->notNullable();
             $table->char('shipment_type', 3)->notNullable();
             $table->unsignedInteger('origin_location')->nullable();
             $table->unsignedInteger('origin_sector')->nullable();
             $table->unsignedInteger('target_location')->nullable();
             $table->unsignedInteger('target_sector')->nullable();
-            $table->foreign('product_id')->references('product_id')->on('products');
             $table->foreign('origin_location')->references('location_id')->on('locations');
             $table->foreign('origin_sector')->references('sector_id')->on('sectors');
             $table->foreign('target_location')->references('location_id')->on('locations');

@@ -104,23 +104,39 @@ INSERT INTO accounts (username, password) VALUES ('denzel', 'admin');
 INSERT INTO accounts (username, password) VALUES ('diego', 'admin');
 INSERT INTO accounts (username, password) VALUES ('sarah', 'admin');
 
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (1, 10, '2024-01-01', 'IN', '1', '1');
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (2, 10, '2024-01-01', 'IN', '1', '1');
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (3, 10, '2024-01-01', 'IN', '1', '2');
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (4, 10, '2024-01-01', 'IN', '1', '2');
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (5, 10, '2024-01-01', 'IN', '1', '3');
+INSERT INTO shipments (shipment_date, shipment_type, target_location, target_sector) VALUES ('2024-01-01', 'IN', '1', '1');
+INSERT INTO shipments (shipment_date, shipment_type, target_location, target_sector) VALUES ('2024-01-01', 'IN', '1', '2');
+INSERT INTO shipments (shipment_date, shipment_type, target_location, target_sector) VALUES ('2024-01-01', 'IN', '1', '3');
+INSERT INTO shipments (shipment_date, shipment_type, target_location, target_sector) VALUES ('2024-01-01', 'IN', '2', '4');
+INSERT INTO shipments (shipment_date, shipment_type, target_location, target_sector) VALUES ('2024-01-01', 'IN', '2', '5');
+INSERT INTO shipments (shipment_date, shipment_type, target_location, target_sector) VALUES ('2024-01-01', 'IN', '2', '6');
+INSERT INTO shipments (shipment_date, shipment_type, target_location, target_sector) VALUES ('2024-01-01', 'IN', '3', '7');
+INSERT INTO shipments (shipment_date, shipment_type, target_location, target_sector) VALUES ('2024-01-01', 'IN', '3', '8');
+INSERT INTO shipments (shipment_date, shipment_type, target_location, target_sector) VALUES ('2024-01-01', 'IN', '3', '9');
 
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (6, 10, '2024-01-01', 'IN', '2', '4');
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (7, 10, '2024-01-01', 'IN', '2', '4');
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (8, 10, '2024-01-01', 'IN', '2', '5');
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (9, 10, '2024-01-01', 'IN', '2', '5');
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (10, 10, '2024-01-01', 'IN', '2', '6');
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (1, 1, 10);
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (1, 2, 10);
 
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (12, 10, '2024-01-01', 'IN', '3', '7');
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (11, 10, '2024-01-01', 'IN', '3', '7');
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (13, 10, '2024-01-01', 'IN', '3', '8');
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (14, 10, '2024-01-01', 'IN', '3', '8');
-INSERT INTO shipments (product_id, product_quantity, shipment_date, shipment_type, target_location, target_sector) VALUES (15, 10, '2024-01-01', 'IN', '3', '9');
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (2, 3, 10);
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (2, 4, 10);
+
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (3, 5, 10);
+
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (4, 6, 10);
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (4, 7, 10);
+
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (5, 8, 10);
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (5, 9, 10);
+
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (6, 10, 10);
+
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (7, 11, 10);
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (7, 12, 10);
+
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (8, 13, 10);
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (8, 14, 10);
+
+INSERT INTO shippedproducts (shipment_id, product_id, product_quantity) VALUES (9, 15, 10);
 
 INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (1, 10, 1, 1);
 INSERT INTO stocks (product_id, product_quantity, location_id, sector_id) VALUES (2, 10, 1, 1);
