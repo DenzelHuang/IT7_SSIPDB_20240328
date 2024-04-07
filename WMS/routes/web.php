@@ -30,4 +30,4 @@ Route::put('/products/{productId}', [ProductController::class, 'update'])->name(
 
 // Shipments
 Route::get('/shipment/form', [ShipmentController::class, 'insert'])->name('shipment.form');;
-Route::get('sectors/{location_id}', [App\Http\Controllers\SectorController::class, 'getRelatedSectors'])->name('sectors.related');
+Route::get('/sectors/{location_id}', [App\Http\Controllers\SectorController::class, 'fetchSectors'])->name('sectors');

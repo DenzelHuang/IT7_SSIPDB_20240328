@@ -7,7 +7,7 @@ use App\Models\Sector;
 
 class SectorController extends Controller
 {
-    public function getRelatedSectors($location_id)
+    public function fetchSectors($location_id)
     {
         $sectors = Sector::where('location_id', $location_id)->get();
 

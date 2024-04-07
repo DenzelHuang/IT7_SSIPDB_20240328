@@ -56,9 +56,6 @@
                     <label id="sectorLabel">Target Sector</label>
                     <select class="form-control" id="sectorSelect" name="sector">
                         <option value="" disabled selected hidden></option>
-                        @foreach ($sectors as $sector)
-                            <option value={{ $sectors->sector_id }}>{{ $sectors->sector_id }}</option>
-                        @endforeach
                     </select>
                 </div>
                 <div class="form-group my-2">
@@ -79,12 +76,13 @@
 
 @include('footer')
 <!-- Bootstrap JS, jQuery, and custom script -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
     $(document).ready(function(){
+        // DATE FUNCTION
         // Validate date format as user types
         $('#shipmentDate').on('input', function() {
             var value = $(this).val();
@@ -96,6 +94,9 @@
             }
         });
 
+
+
+        // RADIO BUTTON FUNCTION
         // Event listener for radio button change
         $('input[type="radio"][name="shipmentType"]').change(function(){
             // Get selected shipment type
@@ -104,6 +105,9 @@
         updateLocationSectorOptions(shipmentType);
         });
 
+
+
+        // SHIPMENT LOCATION VISIBILITY FUNCTION
         // Initialize location and sector options based on the initial radio button selection
         var initialShipmentType = $('input[type="radio"][name="shipmentType"]:checked').val();
         updateLocationSectorOptions(initialShipmentType);
@@ -124,44 +128,46 @@
             }    
         }    
 
+
+
+        // SECTOR ID DISPLAY FUNCTION
         // Event listener for location select change
         $('#locationSelect').change(function() {
             if ($(this).val()) {
                 $('#sector').show(); // Show sector div if an option is selected
-            } else {
-                $('#sector').hide(); // Hide sector div if no option is selected
-            }    
-        });
-
-        // Event listener for location select change
-        $('#locationSelect').change(function() {
-            if ($(this).val()) {
-                $('#sector').show(); // Show sector div if an option is selected
-
-                // Fetch related sectors based on the selected location
-                fetchRelatedSectors($(this).val());
+                fetchSectors($(this).val()); // Fetch sectors based on the selected location
             } else {
                 $('#sector').hide(); // Hide sector div if no option is selected
             }
         });
 
-        // Function to fetch related sectors based on the selected location
-        function fetchRelatedSectors(locationId) {
-            const url = '{{ route('sectors.related', ':location_id') }}';
-            url = url.replace(':location_id', locationId);
-
-            // Fetch related sectors
-            $.get(url, function(data) {
-                // Clear existing sector options
-                $('#sectorSelect').empty();
-
-                // Add new sector options
-                data.forEach(sector => {
-                    $('#sectorSelect').append(`<option value="${sector.sector_id}">${sector.sector_id}</option>`);
-                });
+        // Function to fetch sectors based on the selected location
+        function fetchSectors(locationId) {
+            console.log('Fetching sectors for location ID:', locationId);
+            console.log('URL:', '/sectors/' + locationId);
+            $.ajax({
+                url: '/sectors/' + locationId, // New route to fetch sectors
+                method: 'GET',
+                success: function(data) {
+                    console.log('Fetched sectors:', data);
+                    $('#sectorSelect').empty(); // Clear previously selected sectors
+                    if (data.length) {
+                        data.forEach(function(sectors) {
+                            $('#sectorSelect').append('<option value="' + sectors.sector_id + '">' + sectors.sector_id + '</option>');
+                        });
+                    } else {
+                        $('#sectorSelect').append('<option value="" disabled selected hidden>No sectors found</option>');
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
             });
-        };
-        
+        }
+
+
+
+        // PRODUCT QUANTITY INPUT FIELD FUNCTION 
         // Event listener for checkbox change
         $('.form-check-input[type="checkbox"]').change(function(){
             var selectedItems = []; // Array to store selected items
@@ -180,6 +186,9 @@
             });
         }};
 
+
+
+        // SUBMIT BUTTON FUNCTION (To be removed) 
         // Prevent form submission for this example
         $('#dynamicForm').submit(function(e){
         e.preventDefault();
