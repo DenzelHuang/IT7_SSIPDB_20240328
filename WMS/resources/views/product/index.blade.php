@@ -18,6 +18,7 @@
     </style>
 </head>
 <body>
+    @include('header')
     <div class="container my-5">
         <h1 class="text-center mb-4">Products</h1>
         <!-- Add search input field -->
@@ -50,10 +51,11 @@
                                 </div>
                             @endif
                         </div>
-                     </div>
-                 </div>
+                    </div>
+                </div>
             @endforeach
         </div>
     </div>
+    @include('footer')
 </body>
 </html>

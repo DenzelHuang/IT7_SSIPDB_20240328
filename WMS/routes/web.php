@@ -15,13 +15,13 @@ Route::get('/error', function() {
 });
 
 // Home
-Route::get("/home", [NavigationController::class, "home"]);
+Route::get("/home", [NavigationController::class, "home"])->name('home');;
 
 // Accounts
 Route::get("/account/greet", [AccountController::class, "greet"]);
-Route::get('/login', [AccountController::class, 'login'])->name('login');
+Route::get('/login', [AccountController::class, 'login'])->name('account.login');
 Route::post('/account/check', [AccountController::class, 'loginCheck']);
-Route::get("/account/edit", [AccountController::class, "edit"]);
+Route::get("/account/edit", [AccountController::class, "edit"])->name('account.edit');
 
 // Products
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');
@@ -29,4 +29,4 @@ Route::get('/products/{productId}/edit', [ProductController::class, 'edit'])->na
 Route::put('/products/{productId}', [ProductController::class, 'update'])->name('product.update');
 
 // Shipments
-Route::get('/shipment/form', [ShipmentController::class, 'insert']);
+Route::get('/shipment/form', [ShipmentController::class, 'insert'])->name('shipment.form');;
