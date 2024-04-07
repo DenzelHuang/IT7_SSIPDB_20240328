@@ -16,8 +16,6 @@ return new class extends Migration
             $table->unsignedInteger('product_id')->notNullable();
             $table->unsignedInteger('product_quantity')->notNullable();
             $table->foreign('shipment_id')->references('shipment_id')->on('shipments');
-            $table->foreign('product_id')->references('product_id')->on('products');
-
         });
     }
 

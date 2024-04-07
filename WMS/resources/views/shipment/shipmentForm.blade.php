@@ -47,8 +47,8 @@
                     <label id="locationLabel">Target Location</label>
                     <select class="form-control" id="locationSelect" name="location">
                         <option value="" disabled selected hidden></option>
-                        @foreach ($collection as $item)
-                            <option value=1>1</option>
+                        @foreach ($locations as $location)
+                            <option value={{ $location->location_id }}>{{ $location->location_name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -56,9 +56,9 @@
                     <label id="sectorLabel">Target Sector</label>
                     <select class="form-control" id="sectorSelect" name="sector">
                         <option value="" disabled selected hidden></option>
-                        <option value=1>1</option>
-                        <option value=2>2</option>
-                        <option value=3>3</option>
+                        @foreach ($sectors as $sector)
+                            <option value={{ $sectors->sector_id }}>{{ $sectors->sector_id }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group my-2">
@@ -131,7 +131,36 @@
             } else {
                 $('#sector').hide(); // Hide sector div if no option is selected
             }    
-        });    
+        });
+
+        // Event listener for location select change
+        $('#locationSelect').change(function() {
+            if ($(this).val()) {
+                $('#sector').show(); // Show sector div if an option is selected
+
+                // Fetch related sectors based on the selected location
+                fetchRelatedSectors($(this).val());
+            } else {
+                $('#sector').hide(); // Hide sector div if no option is selected
+            }
+        });
+
+        // Function to fetch related sectors based on the selected location
+        function fetchRelatedSectors(locationId) {
+            const url = '{{ route('sectors.related', ':location_id') }}';
+            url = url.replace(':location_id', locationId);
+
+            // Fetch related sectors
+            $.get(url, function(data) {
+                // Clear existing sector options
+                $('#sectorSelect').empty();
+
+                // Add new sector options
+                data.forEach(sector => {
+                    $('#sectorSelect').append(`<option value="${sector.sector_id}">${sector.sector_id}</option>`);
+                });
+            });
+        };
         
         // Event listener for checkbox change
         $('.form-check-input[type="checkbox"]').change(function(){

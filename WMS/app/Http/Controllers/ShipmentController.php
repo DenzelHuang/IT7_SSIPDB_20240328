@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Location;
 use App\Models\Shipment;
 use App\Models\Product;
+use App\Models\Sector;
 use Illuminate\Http\Request;
 
 class ShipmentController extends Controller
@@ -31,9 +32,11 @@ class ShipmentController extends Controller
         } else {
             $products = Product::all();
             $locations = Location::all();
+            $sectors = Sector::all();
             return view("shipment/shipmentForm", [
                 "products" => $products,
-                "locations" => $locations
+                "locations" => $locations,
+                "sectors" => $sectors
             ]);
         }
     }
