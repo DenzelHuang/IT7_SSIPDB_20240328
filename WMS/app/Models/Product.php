@@ -19,8 +19,11 @@ class Product extends Model
 
     public $timestamps = false; // Disable timestamps
 
-    public function productImage()
-    {
+    public function productImage() {
         return $this->hasOne(ProductImage::class, 'product_id');
+    }
+
+    public function stock() {
+        return $this->hasMany(ProductImage::class, 'product_id');
     }
 }

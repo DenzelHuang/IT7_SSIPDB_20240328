@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Location extends Model
 {
     use HasFactory;
+
+    protected $primaryKey = 'location_id';
+
+    protected $fillable = [
+        'location_name',
+    ];
+
+    public $timestamps = false;
+
+    public function stock(){
+        return $this->hasMany(Stock::class, 'location_id');
+    }
 }
