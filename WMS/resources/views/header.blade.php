@@ -19,6 +19,7 @@
                 <li class="nav-item"><a href="{{ url('/home') }}" class="nav-link" aria-current="page">Home</a></li>
                 <li class="nav-item"><a href="{{ url('/products') }}" class="nav-link">Products</a></li>
                 <li class="nav-item"><a href="{{ url('/shipment/form') }}" class="nav-link">Shipments</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Locations</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Internal Movement</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Monitoring</a></li>
                 <li class="nav-item"><a href="{{ url('account/edit') }}" class="nav-link">Accounts</a></li>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
 use App\Models\Shipment;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -29,8 +30,10 @@ class ShipmentController extends Controller
             return redirect("/shipment/record");
         } else {
             $products = Product::all();
+            $locations = Location::all();
             return view("shipment/shipmentForm", [
-                "products" => $products
+                "products" => $products,
+                "locations" => $locations
             ]);
         }
     }

@@ -12,6 +12,12 @@
         .selected-item {
             margin-top: 5px;
         }
+        button {
+            width: 100%;
+        }
+        .location-sector-group {
+        display: none;
+        }
     </style>
 </head>
 <body>
@@ -20,15 +26,48 @@
 <div class="container mt-5">
     <div class="col-9 mx-auto border">
         <h2 class="text-center text-primary my-4">Add Shipment</h2>
-        <div class="mx-5">
+        <div class="mx-5 py-3">
             <form id="dynamicForm">
+                <div class="form-group my-2">
+                    <label for="shipmentDate">Shipment Date (YYYY-MM-DD)</label>
+                    <input type="text" class="form-control" id="shipmentDate" name="shipmentDate" placeholder="Enter shipment date">
+                </div>
                 <div class="form-group">
+                    <label>Type of Shipment</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="shipmentType" id="shipmentIn" value="IN">
+                        <label class="form-check-label" for="shipmentIn">IN</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="shipmentType" id="shipmentOut" value="OUT">
+                        <label class="form-check-label" for="shipmentOut">OUT</label>
+                    </div>
+                </div>
+                <div class="form-group" id="location">
+                    <label id="locationLabel">Target Location</label>
+                    <select class="form-control" id="locationSelect" name="location">
+                        <option value="" disabled selected hidden></option>
+                        @foreach ($collection as $item)
+                            <option value=1>1</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group" id="sector">
+                    <label id="sectorLabel">Target Sector</label>
+                    <select class="form-control" id="sectorSelect" name="sector">
+                        <option value="" disabled selected hidden></option>
+                        <option value=1>1</option>
+                        <option value=2>2</option>
+                        <option value=3>3</option>
+                    </select>
+                </div>
+                <div class="form-group my-2">
                     <label>Select Items</label><br>
                     @foreach ($products as $product)
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id={{ $product->product_id }} value='{{ $product->product_name }}'>
-                        <label class="form-check-label" for={{ $product->product_id }}>{{ $product->product_name }}</label>
-                    </div><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id={{ $product->product_id }} value='{{ $product->product_name }}'>
+                            <label class="form-check-label" for={{ $product->product_id }}>{{ $product->product_name }}</label>
+                        </div><br>
                     @endforeach        
                 </div>
                 <div id="selectedItems"></div> <!-- Container for selected items -->
@@ -45,33 +84,80 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
-$(document).ready(function(){
-    // Function to add input fields for selected items
-    function addSelectedItems(selectedItems) {
-    $('#selectedItems').empty(); // Clear previously selected items
-    if(selectedItems) {
-        selectedItems.forEach(function(item){
-        $('#selectedItems').append('<div class="selected-item"><label>' + item + ':</label><input type="text" class="form-control" name="' + item + '" placeholder="Enter amount"></div>');
+    $(document).ready(function(){
+        // Validate date format as user types
+        $('#shipmentDate').on('input', function() {
+            var value = $(this).val();
+            var regex = /^\d{4}-\d{2}-\d{2}$/;
+            if (!regex.test(value)) {
+                $(this).addClass('is-invalid');
+            } else {
+                $(this).removeClass('is-invalid');
+            }
         });
-    }
-    }
 
-    // Event listener for checkbox change
-    $('.form-check-input').change(function(){
-    var selectedItems = []; // Array to store selected items
-    $('.form-check-input:checked').each(function() {
-        selectedItems.push($(this).val()); // Add selected items to the array
-    });
-    addSelectedItems(selectedItems); // Add input fields for selected items
-    });
+        // Event listener for radio button change
+        $('input[type="radio"][name="shipmentType"]').change(function(){
+            // Get selected shipment type
+            var shipmentType = $(this).val();
+        // Update location and sector options based on the selected shipment type
+        updateLocationSectorOptions(shipmentType);
+        });
 
-    // Prevent form submission for this example
-    $('#dynamicForm').submit(function(e){
-    e.preventDefault();
-    // Handle form submission logic here
-    // You can collect data from input fields and process it
+        // Initialize location and sector options based on the initial radio button selection
+        var initialShipmentType = $('input[type="radio"][name="shipmentType"]:checked').val();
+        updateLocationSectorOptions(initialShipmentType);
+
+        // Function to dynamically update location and sector options based on radio button selection
+        function updateLocationSectorOptions(shipmentType) {
+            if (shipmentType === "IN") {
+                $('#locationLabel').text('Target Location');
+                $('#sectorLabel').text('Target Sector');
+                $('#location').show();
+            } else if (shipmentType === "OUT") {
+                $('#locationLabel').text('Origin Location');
+                $('#sectorLabel').text('Origin Sector');
+                $('#location').show();
+            } else {
+                $('#location').hide();
+                $('#sector').hide();
+            }    
+        }    
+
+        // Event listener for location select change
+        $('#locationSelect').change(function() {
+            if ($(this).val()) {
+                $('#sector').show(); // Show sector div if an option is selected
+            } else {
+                $('#sector').hide(); // Hide sector div if no option is selected
+            }    
+        });    
+        
+        // Event listener for checkbox change
+        $('.form-check-input[type="checkbox"]').change(function(){
+            var selectedItems = []; // Array to store selected items
+            $('.form-check-input[type="checkbox"]:checked').each(function() {
+                selectedItems.push($(this).val()); // Add selected items to the array
+            });
+            addSelectedItems(selectedItems); // Add input fields for selected items
+        });
+
+        // Function to add input fields for selected items
+        function addSelectedItems(selectedItems) {
+        $('#selectedItems').empty(); // Clear previously selected items
+        if(selectedItems) {
+            selectedItems.forEach(function(item){
+            $('#selectedItems').append('<div class="selected-item"><label>' + item + ':</label><input type="text" class="form-control" name="' + item + '" placeholder="Enter amount"></div>');
+            });
+        }};
+
+        // Prevent form submission for this example
+        $('#dynamicForm').submit(function(e){
+        e.preventDefault();
+        // Handle form submission logic here
+        // You can collect data from input fields and process it
+        });
     });
-});
 </script>
 
 </body>
