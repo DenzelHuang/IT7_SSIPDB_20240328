@@ -13,11 +13,11 @@
             flex-direction: column;
             min-height: 100vh;
             align-items: center;
+            height: 420px;
         }
         .account-box {
             padding: 20px;
             border: 1px solid black;
-            height: 420px;
             background-color: ghostwhite;
             border-radius: 20px;
             overflow: hidden;

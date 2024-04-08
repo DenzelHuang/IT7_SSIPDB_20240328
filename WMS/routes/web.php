@@ -35,6 +35,7 @@ Route::post('/products', [ProductController::class, 'store'])->name('product.sto
 
 // Shipments
 Route::get('/shipment/form', [ShipmentController::class, 'insert']);
+Route::get('/shipment/index', [ShipmentController::class, 'getAll']);
 
 // Stocks
 Route::get('/stocks', [StockController::class, 'index'])->name('stock.index');
