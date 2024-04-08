@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shippedproducts', function (Blueprint $table) {
+        Schema::create('shipped_products', function (Blueprint $table) {
             $table->unsignedInteger('shipment_id')->notNullable();
             $table->unsignedInteger('product_id')->notNullable();
             $table->unsignedInteger('product_quantity')->notNullable();
             $table->foreign('shipment_id')->references('shipment_id')->on('shipments');
+            $table->primary(['shipment_id', 'product_id']);
         });
     }
 
