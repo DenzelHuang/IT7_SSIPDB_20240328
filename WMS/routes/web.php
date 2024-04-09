@@ -6,6 +6,7 @@ use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\SectorController;
 
 // Troubleshooting
 Route::get('/', function () {
@@ -35,11 +36,14 @@ Route::post('/products', [ProductController::class, 'store'])->name('product.sto
 
 // Shipments
 Route::get('/shipment/form', [ShipmentController::class, 'insert']);
+Route::post('/shipment/form', function () {
+    return view('error');
+});
 Route::get('/shipment/index', [ShipmentController::class, 'getAll']);
 
 // Stocks
 Route::get('/stocks', [StockController::class, 'index'])->name('stock.index');
 
 // Sectors
-Route::get('/sectors/{location_id}', [App\Http\Controllers\SectorController::class, 'fetchSectors'])->name('sectors');
+Route::get('/sectors/{location_id}', [SectorController::class, 'fetchSectors'])->name('sectors');
 

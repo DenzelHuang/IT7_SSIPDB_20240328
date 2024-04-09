@@ -27,7 +27,8 @@
     <div class="col-9 mx-auto border">
         <h2 class="text-center text-primary my-4">Add Shipment</h2>
         <div class="mx-5 py-3">
-            <form id="dynamicForm">
+            <form id="dynamicForm" method="POST">
+                @csrf
                 <div class="form-group my-2">
                     <label for="shipmentDate">Shipment Date (YYYY-MM-DD)</label>
                     <input type="text" class="form-control" id="shipmentDate" name="shipmentDate" placeholder="Enter shipment date">
@@ -190,11 +191,11 @@
 
         // SUBMIT BUTTON FUNCTION (To be removed) 
         // Prevent form submission for this example
-        $('#dynamicForm').submit(function(e){
-        e.preventDefault();
-        // Handle form submission logic here
-        // You can collect data from input fields and process it
-        });
+        // $('#dynamicForm').submit(function(e){
+        // e.preventDefault();
+        // // Handle form submission logic here
+        // // You can collect data from input fields and process it
+        // });
     });
 </script>
 
