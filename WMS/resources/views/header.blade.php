@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Header</title>
+    <title>
+        @yield('title')
+    </title>
+    <link rel="stylesheet" href="{{ asset('css/Stylesheet.css') }}">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @yield('styling')
+    @yield('scripts')
 </head>
 <body>
     <div class="container-flex col-12 sticky-top" style="background-color: white">
@@ -16,15 +21,16 @@
             </a>
         
             <ul class="nav nav-pills">
-                <li class="nav-item"><a href="{{ url('/home') }}" class="nav-link" aria-current="page">Home</a></li>
-                <li class="nav-item"><a href="{{ url('/products') }}" class="nav-link">Products</a></li>
-                <li class="nav-item"><a href="{{ url('/shipment/form') }}" class="nav-link">Shipments</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Locations</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Internal Movement</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Monitoring</a></li>
-                <li class="nav-item"><a href="{{ url('account/edit') }}" class="nav-link">Accounts</a></li>
+                <li class="nav-item"><a href="{{ url('/home') }}" class="nav-link @yield('home_active')" aria-current="page">Home</a></li>
+                <li class="nav-item"><a href="{{ url('/products') }}" class="nav-link @yield('product_active')">Products</a></li>
+                <li class="nav-item"><a href="{{ url('/shipment/form') }}" class="nav-link @yield('shipment_active')">Shipments</a></li>
+                <li class="nav-item"><a href="#" class="nav-link @yield('location_active')">Locations</a></li>
+                <li class="nav-item"><a href="#" class="nav-link @yield('intmvt_active')">Internal Movement</a></li>
+                <li class="nav-item"><a href="#" class="nav-link @yield('monitoring_active')">Monitoring</a></li>
+                <li class="nav-item"><a href="{{ url('account/edit') }}" class="nav-link @yield('account_active')">Accounts</a></li>
             </ul>
         </header>
     </div>
+    @yield('content')
 </body>
 </html>
