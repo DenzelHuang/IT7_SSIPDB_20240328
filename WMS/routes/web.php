@@ -36,10 +36,14 @@ Route::post('/products', [ProductController::class, 'store'])->name('product.sto
 
 // Shipments
 Route::get('/shipment/form', [ShipmentController::class, 'insert']);
+Route::get('/shipment/form', [ShipmentController::class, 'insert'])->name('shipment.form');
 Route::post('/shipment/form', function () {
     return view('error');
 });
 Route::get('/shipment/index', [ShipmentController::class, 'getAll']);
+Route::get('/shipment/index', [ShipmentController::class, 'getAll'])->name('shipment.index');
+Route::get('/shipment/product/{id}', [ShipmentController::class, 'shipmentProduct'])->name('shipment.product');
+
 
 // Stocks
 Route::get('/stocks', [StockController::class, 'index'])->name('stock.index');

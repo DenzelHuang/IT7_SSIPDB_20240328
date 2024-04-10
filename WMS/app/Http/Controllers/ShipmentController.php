@@ -7,6 +7,7 @@ use App\Models\Shipment;
 use App\Models\Product;
 use App\Models\Sector;
 use Illuminate\Http\Request;
+use App\Models\ShippedProduct;
 
 class ShipmentController extends Controller
 {
@@ -41,4 +42,12 @@ class ShipmentController extends Controller
         }
     }
 
+    public function shipmentProduct(int $id) {
+        // Find all shipped products for the given shipment ID
+        $shippedProducts = ShippedProduct::with('product')->where('shipment_id', $id)->get();
+        return view("shipment/shipmentProduct", [
+            "id" => $id,
+            "shippedProducts" => $shippedProducts
+        ]);
+    }
 }

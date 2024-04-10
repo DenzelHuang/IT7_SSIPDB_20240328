@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ShippedProduct extends Model
 {
     use HasFactory;
+
+    protected $table = 'shipped_products';
+
+    public function product() {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

@@ -1,29 +1,30 @@
+<!-- He who is contented is rich. - Laozi -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accounts</title>
+    <title>Product</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/Stylesheet.css') }}">
     <style>
-        /* Accounts */
-        .accounts-body {
+        /* Product */
+        .product-body {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             align-items: center;
-            height: 420px;
         }
-        .account-box {
+        .product-box {
             padding: 20px;
             border: 1px solid black;
             background-color: ghostwhite;
             border-radius: 20px;
             overflow: hidden;
+            overflow-x: scroll;
             overflow-y: scroll;
         }
-        .account-list {
+        .product-list {
             height: 100%;
             border-top: 1px solid black;
             border-bottom: 1px solid black;
@@ -31,45 +32,58 @@
             overflow: hidden;
             overflow-y: scroll;
         }
-        .account-box::-webkit-scrollbar,
-        .account-list::-webkit-scrollbar {
+        .product-box::-webkit-scrollbar,
+        .product-list::-webkit-scrollbar {
             display: none;
         } 
-        .account-list * {
+        .product-list th:nth-child(2),
+        .product-list td:nth-child(2) {
+            width: 75%;
+        }
+        .product-list th:nth-child(3),
+        .product-list td:nth-child(3) {
+            width: 15%;
+        }
+        .product-list table,
+        .product-list tr,
+        .product-list th,
+        .product-list td {
             border: 1px solid black;
         }
-        .account-list table {
+        .product-list table {
             margin-top: -1px;
             margin-bottom: -1px;
             padding: 0;
             width: 100%;
         }
-        .account-list th, 
-        .account-list td {
+        .product-list th, 
+        .product-list td {
             text-align: center;
         }
     </style>
 </head> 
-<body class="accounts-body">
+<body class="product-body">
     @include('header')
 
-    <div class="account-box container">
-        <div class="account-list">
+    <div class="product-box container">
+        <h3>Product Shipment ID: {{ $id }}</h3>
+        <div class="product-list">
             <table>
                 <tr>
                     <th>ID</th>
-                    <th>Username</th>
-                    <th>Password</th>
+                    <th>Name</th>
+                    <th>Quantity</th>
                 </tr>
-                @foreach ($accounts as $account)
+                @foreach ($shippedProducts as $product)
                 <tr>
-                    <td>{{ $account->user_id }}</td>
-                    <td>{{ $account->username }}</td>
-                    <td>{{ $account->password }}</td>
+                    <td>{{ $product->product_id }}</td>
+                    <td>{{ $product->product ? $product->product->product_name : 'N/A' }}</td>
+                    <td>{{ $product->product_quantity }}</td>
                 </tr>
                 @endforeach
             </table>
         </div>
+        <a href="{{ route('shipment.index') }}" class="btn btn-primary mt-2">Back</a>
     </div>
 
     @include('footer')

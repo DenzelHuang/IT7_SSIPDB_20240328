@@ -16,7 +16,10 @@ class AccountController extends Controller
     }
 
     public function edit() {
-        return view('account/edit');
+        $accounts = Account::all();
+        return view('account/edit', [
+            "accounts" => $accounts,
+        ]);
     }
 
     public function loginCheck(Request $request)

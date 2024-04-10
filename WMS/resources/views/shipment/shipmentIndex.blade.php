@@ -15,7 +15,6 @@
             flex-direction: column;
             min-height: 100vh;
             align-items: center;
-            height: 420px;
         }
         .shipment-box {
             padding: 20px;
@@ -23,6 +22,7 @@
             background-color: ghostwhite;
             border-radius: 20px;
             overflow: hidden;
+            overflow-x: scroll;
             overflow-y: scroll;
         }
         .shipment-list {
@@ -37,7 +37,10 @@
         .shipment-list::-webkit-scrollbar {
             display: none;
         } 
-        .shipment-list * {
+        .shipment-list table,
+        .shipment-list tr,
+        .shipment-list th,
+        .shipment-list td {
             border: 1px solid black;
         }
         .shipment-list table {
@@ -54,36 +57,35 @@
 </head> 
 <body class="shipment-body">
     @include('header')
-
     <div class="shipment-box container">
+        <h3>Shipment Index</h3>
         <div class="shipment-list">
             <table>
                 <tr>
-                    <th>shipment_id</th>
-                    <th>product_id</th>
-                    <th>product_quantity</th>
-                    <th>shipment_date</th>
-                    <th>shipment_type</th>
-                    <th>origin_location</th>
-                    <th>origin_sector</th>
-                    <th>target_location</th>
-                    <th>target_sector</th>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Origin_location</th>
+                    <th>Origin_sector</th>
+                    <th>Target_location</th>
+                    <th>Target_sector</th>
+                    <th>Action</th>
                 </tr>
                 @foreach ($shipments as $shipment)
                 <tr>
                     <td>{{ $shipment->shipment_id }}</td>
-                    <td>{{ $shipment->product_id }}</td>
-                    <td>{{ $shipment->product_quantity }}</td>
                     <td>{{ $shipment->shipment_date }}</td>
                     <td>{{ $shipment->shipment_type }}</td>
                     <td>{{ $shipment->origin_location }}</td>
                     <td>{{ $shipment->origin_sector }}</td>
                     <td>{{ $shipment->target_location }}</td>
                     <td>{{ $shipment->target_sector }}</td>
+                    <td><a href="{{ route('shipment.product', ['id' => $shipment->shipment_id]) }}">Show</a></td>
                 </tr>
                 @endforeach
             </table>
         </div>
+        <a href="{{ route('shipment.form') }}" class="btn btn-primary mt-2">Add</a>
     </div>
 
     @include('footer')
