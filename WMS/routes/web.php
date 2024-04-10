@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SectorController;
+use App\Http\Middleware\ValidateShipmentRequest;
 
 // Troubleshooting
 Route::get('/', function () {
@@ -36,9 +37,7 @@ Route::post('/products', [ProductController::class, 'store'])->name('product.sto
 
 // Shipments
 Route::get('/shipment/form', [ShipmentController::class, 'insert']);
-Route::post('/shipment/form', function () {
-    return view('error');
-});
+Route::post('/shipment/form', [ShipmentController::class, 'insert'])->middleware(ValidateShipmentRequest::class);
 Route::get('/shipment/index', [ShipmentController::class, 'getAll']);
 Route::get('/shipment/index', [ShipmentController::class, 'getAll'])->name('shipment.index');
 Route::get('/shipment/product/{id}', [ShipmentController::class, 'shipmentProduct'])->name('shipment.product');

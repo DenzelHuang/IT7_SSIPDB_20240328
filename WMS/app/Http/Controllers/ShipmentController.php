@@ -8,7 +8,6 @@ use App\Models\Product;
 use App\Models\Sector;
 use App\Models\ShippedProduct;
 use Illuminate\Http\Request;
-use App\Models\ShippedProduct;
 
 class ShipmentController extends Controller
 {

@@ -52,18 +52,23 @@
             // Function to dynamically update location and sector options based on radio button selection
             function updateLocationSectorOptions(shipment_type) {
                 if (shipment_type === "IN") {
-                    $('#locationLabel').text('Target Location');
-                    $('#sectorLabel').text('Target Sector');
+                    $('#location_label').text('Target Location');
+                    $('#sector_label').text('Target Sector');
+                    $('#location').show();
                 } else if (shipment_type === "OUT") {
-                    $('#locationLabel').text('Origin Location');
-                    $('#sectorLabel').text('Origin Sector');
-                }
+                    $('#location_label').text('Origin Location');
+                    $('#sector_label').text('Origin Sector');
+                    $('#location').show();
+                } else {
+                    $('#location').hide();
+                    $('#sector').hide();
+                }    
             }
 
 
             // SECTOR ID DISPLAY FUNCTION
             // Event listener for location select change
-            $('#locationSelect').change(function() {
+            $('#location_select').change(function() {
                 if ($(this).val()) {
                     $('#sector').show(); // Show sector div if an option is selected
                     fetchSectors($(this).val()); // Fetch sectors based on the selected location
@@ -81,13 +86,13 @@
                     method: 'GET',
                     success: function(data) {
                         console.log('Fetched sectors:', data);
-                        $('#sectorSelect').empty(); // Clear previously selected sectors
+                        $('#sector_select').empty(); // Clear previously selected sectors
                         if (data.length) {
                             data.forEach(function(sectors) {
-                                $('#sectorSelect').append('<option value="' + sectors.sector_id + '">' + sectors.sector_id + '</option>');
+                                $('#sector_select').append('<option value="' + sectors.sector_id + '">' + sectors.sector_id + '</option>');
                             });
                         } else {
-                            $('#sectorSelect').append('<option value="" disabled selected hidden>No sectors found</option>');
+                            $('#sector_select').append('<option value="" disabled selected hidden>No sectors found</option>');
                         }
                     },
                     error: function(error) {
@@ -108,16 +113,6 @@
                     $('#quantityInput' + productId).hide();
                 }
             });
-
-
-
-            // SUBMIT BUTTON FUNCTION (To be removed) 
-            // Prevent form submission for this example
-            // $('#dynamicForm').submit(function(e){
-            // e.preventDefault();
-            // // Handle form submission logic here
-            // // You can collect data from input fields and process it
-            // });
         });
     </script>
 @endsection
@@ -132,8 +127,11 @@
                 <form id="dynamicForm" method="POST">
                     @csrf
                     <div class="form-group my-2">
-                        <label for="shipment_date">Shipment Date (YYYY-MM-DD)</label>
-                        <input type="text" class="form-control" id="shipment_date" name="shipment_date" placeholder="Enter shipment date">
+                        <label for="shipment_date">Shipment Date</label>
+                        <input type="date" max="9999-12-31" class="form-control" id="shipment_date" name="shipment_date" required>
+                        @error('shipment_date')
+                            <br><span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label>Type of Shipment</label><br>
@@ -145,22 +143,85 @@
                             <input class="form-check-input" type="radio" name="shipment_type" id="shipmentOut" value="OUT">
                             <label class="form-check-label" for="shipmentOut">OUT</label>
                         </div>
+                        @error('shipment_type')
+                            <br><span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
+
+                    @if(old('shipmentType') == 'IN')
+                        <div class="form-group">
+                            <label id="location_label">Target Location</label>
+                            <select class="form-control" id="location_select" name="target_location">
+                                <option value="" disabled selected hidden></option>
+                                @foreach ($locations as $location)
+                                    <option value="{{ $location->location_id }}">{{ $location->location_name }}</option>
+                                @endforeach
+                            </select>
+                            @error('target_location')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label id="sector_label">Target Sector</label>
+                            <select class="form-control" id="sector_select" name="target_sector">
+                                <option value="" disabled selected hidden></option>
+                            </select>
+                            @error('target_sector')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    @elseif(old('shipmentType') == 'OUT')
+                        <div class="form-group">
+                            <label id="location_label">Origin Location</label>
+                            <select class="form-control" id="location_select" name="origin_location">
+                                <option value="" disabled selected hidden></option>
+                                @foreach ($locations as $location)
+                                    <option value="{{ $location->location_id }}">{{ $location->location_name }}</option>
+                                @endforeach
+                            </select>
+                            @error('origin_location')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label id="sector_label">Origin Sector</label>
+                            <select class="form-control" id="sector_select" name="origin_sector">
+                                <option value="" disabled selected hidden></option>
+                            </select>
+                            @error('origin_sector')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    @endif
+
                     <div class="form-group" id="location">
-                        <label id="locationLabel">Target Location</label>
-                        <select class="form-control" id="locationSelect" name="target_location">
+                        <label id="location_label">Target Location</label>
+                        <select class="form-control" id="location_select" name="target_location">
                             <option value="" disabled selected hidden></option>
                             @foreach ($locations as $location)
                                 <option value="{{ $location->location_id }}">{{ $location->location_name }}</option>
                             @endforeach
                         </select>
+                        @error('target_location')
+                            <br><span class="text-danger">{{ $message }}</span>
+                        @enderror
+                        @error('origin_location')
+                            <br><span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group" id="sector">
-                        <label id="sectorLabel">Target Sector</label>
-                        <select class="form-control" id="sectorSelect" name="target_sector">
+                        <label id="sector_label">Target Sector</label>
+                        <select class="form-control" id="sector_select" name="target_sector">
                             <option value="" disabled selected hidden></option>
                         </select>
+                        @error('target_sector')
+                            <br><span class="text-danger">{{ $message }}</span>
+                        @enderror
+                        @error('origin_sector')
+                            <br><span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
+
                     <div class="form-group my-2">
                         <label>Select Items</label><br>
                         @foreach ($products as $product)
