@@ -21,7 +21,6 @@ Route::get('/error', function() {
 Route::get("/home", [NavigationController::class, "home"]);
 
 // Accounts
-Route::get("/account/greet", [AccountController::class, "greet"]);
 Route::get('/login', [AccountController::class, 'login'])->name('login');
 Route::post('/account/check', [AccountController::class, 'loginCheck']);
 Route::get("/account/edit", [AccountController::class, "edit"]);
@@ -36,9 +35,8 @@ Route::get('/products/create', [ProductController::class, 'create'])->name('prod
 Route::post('/products', [ProductController::class, 'store'])->name('product.store');
 
 // Shipments
-Route::get('/shipment/form', [ShipmentController::class, 'insert']);
+Route::get('/shipment/form', [ShipmentController::class, 'insert'])->name('shipment.form');
 Route::post('/shipment/form', [ShipmentController::class, 'insert'])->middleware(ValidateShipmentRequest::class);
-Route::get('/shipment/index', [ShipmentController::class, 'getAll']);
 Route::get('/shipment/index', [ShipmentController::class, 'getAll'])->name('shipment.index');
 Route::get('/shipment/product/{id}', [ShipmentController::class, 'shipmentProduct'])->name('shipment.product');
 
