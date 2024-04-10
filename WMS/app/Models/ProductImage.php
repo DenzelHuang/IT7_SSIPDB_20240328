@@ -9,7 +9,7 @@ class ProductImage extends Model
 {
     use HasFactory;
 
-    protected $table = 'productimages';
+    protected $table = 'product_images';
 
     protected $primaryKey = 'product_id';
 
