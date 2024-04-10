@@ -37,36 +37,28 @@
 
             // RADIO BUTTON FUNCTION
             // Event listener for radio button change
-            $('input[type="radio"][name="shipmentType"]').change(function(){
-                // Get selected shipment type
-                var shipmentType = $(this).val();
-            // Update location and sector options based on the selected shipment type
-            updateLocationSectorOptions(shipmentType);
-            });
+                $('input[type="radio"][name="shipment_type"]').change(function(){
+                    var shipment_type = $(this).val();
+                    updateLocationSectorOptions(shipment_type);
+                });
 
 
 
             // SHIPMENT LOCATION VISIBILITY FUNCTION
             // Initialize location and sector options based on the initial radio button selection
-            var initialShipmentType = $('input[type="radio"][name="shipmentType"]:checked').val();
-            updateLocationSectorOptions(initialShipmentType);
+            var initial_shipment_type = $('input[type="radio"][name="shipment_type"]:checked').val();
+            updateLocationSectorOptions(initial_shipment_type);
 
             // Function to dynamically update location and sector options based on radio button selection
-            function updateLocationSectorOptions(shipmentType) {
-                if (shipmentType === "IN") {
+            function updateLocationSectorOptions(shipment_type) {
+                if (shipment_type === "IN") {
                     $('#locationLabel').text('Target Location');
                     $('#sectorLabel').text('Target Sector');
-                    $('#location').show();
-                } else if (shipmentType === "OUT") {
+                } else if (shipment_type === "OUT") {
                     $('#locationLabel').text('Origin Location');
                     $('#sectorLabel').text('Origin Sector');
-                    $('#location').show();
-                } else {
-                    $('#location').hide();
-                    $('#sector').hide();
-                }    
-            }    
-
+                }
+            }
 
 
             // SECTOR ID DISPLAY FUNCTION
@@ -107,23 +99,15 @@
 
 
             // PRODUCT QUANTITY INPUT FIELD FUNCTION 
-            // Event listener for checkbox change
+            // JavaScript code for showing/hiding quantity input fields
             $('.form-check-input[type="checkbox"]').change(function(){
-                var selectedItems = []; // Array to store selected items
-                $('.form-check-input[type="checkbox"]:checked').each(function() {
-                    selectedItems.push($(this).val()); // Add selected items to the array
-                });
-                addSelectedItems(selectedItems); // Add input fields for selected items
+                var productId = $(this).val();
+                if ($(this).is(':checked')) {
+                    $('#quantityInput' + productId).show();
+                } else {
+                    $('#quantityInput' + productId).hide();
+                }
             });
-
-            // Function to add input fields for selected items
-            function addSelectedItems(selectedItems) {
-            $('#selectedItems').empty(); // Clear previously selected items
-            if(selectedItems) {
-                selectedItems.forEach(function(item){
-                $('#selectedItems').append('<div class="selected-item"><label>' + item + ':</label><input type="text" class="form-control" name="' + item + '" placeholder="Enter amount"></div>');
-                });
-            }};
 
 
 
@@ -148,32 +132,32 @@
                 <form id="dynamicForm" method="POST">
                     @csrf
                     <div class="form-group my-2">
-                        <label for="shipmentDate">Shipment Date (YYYY-MM-DD)</label>
-                        <input type="text" class="form-control" id="shipmentDate" name="shipmentDate" placeholder="Enter shipment date">
+                        <label for="shipment_date">Shipment Date (YYYY-MM-DD)</label>
+                        <input type="text" class="form-control" id="shipment_date" name="shipment_date" placeholder="Enter shipment date">
                     </div>
                     <div class="form-group">
                         <label>Type of Shipment</label><br>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="shipmentType" id="shipmentIn" value="IN">
+                            <input class="form-check-input" type="radio" name="shipment_type" id="shipmentIn" value="IN">
                             <label class="form-check-label" for="shipmentIn">IN</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="shipmentType" id="shipmentOut" value="OUT">
+                            <input class="form-check-input" type="radio" name="shipment_type" id="shipmentOut" value="OUT">
                             <label class="form-check-label" for="shipmentOut">OUT</label>
                         </div>
                     </div>
                     <div class="form-group" id="location">
                         <label id="locationLabel">Target Location</label>
-                        <select class="form-control" id="locationSelect" name="location">
+                        <select class="form-control" id="locationSelect" name="target_location">
                             <option value="" disabled selected hidden></option>
                             @foreach ($locations as $location)
-                                <option value={{ $location->location_id }}>{{ $location->location_name }}</option>
+                                <option value="{{ $location->location_id }}">{{ $location->location_name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group" id="sector">
                         <label id="sectorLabel">Target Sector</label>
-                        <select class="form-control" id="sectorSelect" name="sector">
+                        <select class="form-control" id="sectorSelect" name="target_sector">
                             <option value="" disabled selected hidden></option>
                         </select>
                     </div>
@@ -181,8 +165,11 @@
                         <label>Select Items</label><br>
                         @foreach ($products as $product)
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id={{ $product->product_id }} value='{{ $product->product_name }}'>
-                                <label class="form-check-label" for={{ $product->product_id }}>{{ $product->product_name }}</label>
+                                <input class="form-check-input" type="checkbox" id="{{ $product->product_id }}" value="{{ $product->product_id }}" name="selected_products[]">
+                                <label class="form-check-label" for="{{ $product->product_id }}">{{ $product->product_name }}</label>
+                            </div><br>
+                            <div id="quantityInput{{ $product->product_id }}" class="quantity-input" style="display: none;">
+                                <input type="number" class="form-control" name="{{ $product->product_id }}" placeholder="Enter quantity">
                             </div><br>
                         @endforeach        
                     </div>

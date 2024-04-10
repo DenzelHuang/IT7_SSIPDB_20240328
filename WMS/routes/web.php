@@ -36,7 +36,6 @@ Route::post('/products', [ProductController::class, 'store'])->name('product.sto
 
 // Shipments
 Route::get('/shipment/form', [ShipmentController::class, 'insert']);
-Route::get('/shipment/form', [ShipmentController::class, 'insert'])->name('shipment.form');
 Route::post('/shipment/form', function () {
     return view('error');
 });
