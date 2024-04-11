@@ -126,102 +126,70 @@
             <div class="mx-5 py-3">
                 <form id="dynamicForm" method="POST">
                     @csrf
-                    <div class="form-group my-2">
-                        <label for="shipment_date">Shipment Date</label>
-                        <input type="date" max="9999-12-31" class="form-control" id="shipment_date" name="shipment_date" required>
-                        @error('shipment_date')
-                            <br><span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label>Type of Shipment</label><br>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="shipment_type" id="shipmentIn" value="IN">
-                            <label class="form-check-label" for="shipmentIn">IN</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="shipment_type" id="shipmentOut" value="OUT">
-                            <label class="form-check-label" for="shipmentOut">OUT</label>
-                        </div>
-                        @error('shipment_type')
-                            <br><span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    @if(old('shipmentType') == 'IN')
-                        <div class="form-group">
-                            <label id="location_label">Target Location</label>
-                            <select class="form-control" id="location_select" name="target_location">
-                                <option value="" disabled selected hidden></option>
-                                @foreach ($locations as $location)
-                                    <option value="{{ $location->location_id }}">{{ $location->location_name }}</option>
+                    @if(session('errors'))
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
                                 @endforeach
-                            </select>
-                            @error('target_location')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label id="sector_label">Target Sector</label>
-                            <select class="form-control" id="sector_select" name="target_sector">
-                                <option value="" disabled selected hidden></option>
-                            </select>
-                            @error('target_sector')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    @elseif(old('shipmentType') == 'OUT')
-                        <div class="form-group">
-                            <label id="location_label">Origin Location</label>
-                            <select class="form-control" id="location_select" name="origin_location">
-                                <option value="" disabled selected hidden></option>
-                                @foreach ($locations as $location)
-                                    <option value="{{ $location->location_id }}">{{ $location->location_name }}</option>
-                                @endforeach
-                            </select>
-                            @error('origin_location')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label id="sector_label">Origin Sector</label>
-                            <select class="form-control" id="sector_select" name="origin_sector">
-                                <option value="" disabled selected hidden></option>
-                            </select>
-                            @error('origin_sector')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            </ul>
                         </div>
                     @endif
 
+                    {{-- Date Field --}}
+                    <div class="form-group my-2">
+                        <label for="shipment_date">Shipment Date</label>
+                        <input type="date" max="9999-12-31" class="form-control" id="shipment_date" name="shipment_date" required>
+                        <!-- Add error message -->
+                        @error('shipment_date')
+                            <div class="text-danger">Do not leave blank</div>
+                        @enderror
+                    </div>
+
+                    {{-- Shipment Type Radio Buttons --}}
+                    <div class="form-group">
+                        <label>Type of Shipment</label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="shipment_type" id="shipment_in" value="IN">
+                            <label class="form-check-label" for="shipment_in">IN</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="shipment_type" id="shipment_out" value="OUT">
+                            <label class="form-check-label" for="shipment_out">OUT</label>
+                        </div>
+                        <!-- Add error message -->
+                            @error('shipment_type')
+                            <div class="text-danger">Do not leave blank</div>
+                        @enderror
+                    </div>
+
+                    {{-- Location Selection --}}
                     <div class="form-group" id="location">
                         <label id="location_label">Target Location</label>
-                        <select class="form-control" id="location_select" name="target_location">
+                        <select class="form-control" id="location_select" name="location_select">
                             <option value="" disabled selected hidden></option>
                             @foreach ($locations as $location)
                                 <option value="{{ $location->location_id }}">{{ $location->location_name }}</option>
                             @endforeach
                         </select>
-                        @error('target_location')
-                            <br><span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        @error('origin_location')
-                            <br><span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="form-group" id="sector">
-                        <label id="sector_label">Target Sector</label>
-                        <select class="form-control" id="sector_select" name="target_sector">
-                            <option value="" disabled selected hidden></option>
-                        </select>
-                        @error('target_sector')
-                            <br><span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        @error('origin_sector')
-                            <br><span class="text-danger">{{ $message }}</span>
+                        <!-- Add error message -->
+                        @error('location_select')
+                        <div class="text-danger">Do not leave blank</div>
                         @enderror
                     </div>
 
+                    {{-- Sector Selection --}}
+                    <div class="form-group" id="sector">
+                        <label id="sector_label">Target Sector</label>
+                        <select class="form-control" id="sector_select" name="sector_select">
+                            <option value="" disabled selected hidden></option>
+                        </select>
+                        @error('sector_select')
+                        <div class="text-danger">Do not leave blank</div>
+                        @enderror
+                    </div>
+
+                    {{-- Product Checkboxes --}}
                     <div class="form-group my-2">
                         <label>Select Items</label><br>
                         @foreach ($products as $product)
@@ -231,9 +199,15 @@
                             </div><br>
                             <div id="quantityInput{{ $product->product_id }}" class="quantity-input" style="display: none;">
                                 <input type="number" class="form-control" name="{{ $product->product_id }}" placeholder="Enter quantity">
+                                <!-- Add error message for quantity field -->
+                                @error($product->product_id)
+                                    <div class="text-danger">Do not leave blank</div>
+                                @enderror
                             </div><br>
                         @endforeach        
                     </div>
+
+                    {{-- Submit Button --}}
                     <div id="selectedItems"></div> <!-- Container for selected items -->
                     <button type="submit" class="btn btn-primary mt-3">Submit</button>
                 </form>    
