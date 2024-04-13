@@ -23,7 +23,7 @@
             <ul class="nav nav-pills">
                 <li class="nav-item"><a href="{{ url('/home') }}" class="nav-link @yield('home_active')" aria-current="page">Home</a></li>
                 <li class="nav-item"><a href="{{ url('/products') }}" class="nav-link @yield('product_active')">Products</a></li>
-                <li class="nav-item"><a href="" class="nav-link @yield('stock_active')">Stock</a></li>
+                <li class="nav-item"><a href="{{ url('/stocks') }}" class="nav-link @yield('stock_active')">Stock</a></li>
                 <li class="nav-item"><a href="{{ url('/shipment/index') }}" class="nav-link @yield('shipment_active')">Shipments</a></li>
                 <li class="nav-item"><a href="" class="nav-link @yield('location_active')">Locations</a></li>
                 <li class="nav-item"><a href="" class="nav-link @yield('intmvt_active')">Internal Movement</a></li>

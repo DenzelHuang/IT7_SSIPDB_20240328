@@ -26,11 +26,11 @@ class ShipmentController extends Controller
             $shipment->shipment_date = $request->shipment_date;
             $shipment->shipment_type = $request->shipment_type;
             if ($request->shipment_type === "IN") {
-                $shipment->target_location = $request->target_location;
-                $shipment->target_sector = $request->target_sector;
+                $shipment->target_location = $request->location_select;
+                $shipment->target_sector = $request->sector_select;
             } elseif ($request->shipment_type === "OUT") {
-                $shipment->origin_location = $request->target_location;
-                $shipment->origin_sector = $request->target_sector;
+                $shipment->origin_location = $request->location_select;
+                $shipment->origin_sector = $request->sector_select;
             }
             $shipment->save();
             
