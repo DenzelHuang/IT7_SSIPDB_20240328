@@ -9,6 +9,18 @@
             width: 400px;
             height: 400px;
         }
+        table {
+            margin-bottom: 20px;
+        }
+        th {
+            background-color: grey;
+        }
+        .locations-data-tables {
+            gap: 20px;
+        }
+        .locations-data-tables table {
+            border: 1px solid black;
+        }
     </style>
 @endsection
 
@@ -28,8 +40,52 @@
     <div id="chart-segment-1" class="segments mt-2 mb-4 d-flex justify-content-center align-item-center">
         <svg id="pie-chart-container" class="pie-chart-container"></svg>
     </div>
+
+    <h3 id="container mt-4">Locations Data</h3>
+    @foreach ($locationData as $locationName => $locationItem)
+    <h4 class="container">{{ $locationName }} Data</h4>
+    <div class="locations-data-tables d-flex container">
+        <!-- Table 1 -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Product Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($locationItem['products'] as $product)
+                    <tr>
+                        <td>{{ $product->product_name }}</td>
+                        <td>{{ $product->product_quantity }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <!-- Table 2 -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Sector ID</th>
+                    <th>Total Product Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($locationItem['sectors']->groupBy('sector_id') as $sectorId => $sectors)
+                    <tr>
+                        <td>{{ $sectorId }}</td>
+                        <td>{{ $sectors->sum('product_quantity') }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    @endforeach
+
+    <!-- Include the footer -->
     @include('footer')
 </div>
+
 <script>
     // Data
     var data = {!! json_encode($getQtyByLocations) !!};

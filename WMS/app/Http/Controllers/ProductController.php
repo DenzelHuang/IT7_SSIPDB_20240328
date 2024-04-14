@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Models\Product;
-use App\Models\Stock;
-use App\Models\Sector;
 use App\Models\Location;
+use App\Models\Sector;
+use App\Models\Stock;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -106,12 +106,44 @@ class ProductController extends Controller
         return redirect('/products')->with('success', 'Product added successfully.');
     }
 
-    public function getQtyByLocationChart() {
+    public function getDataForHomePage()
+    {
+        // Get data for pie chart
         $getQtyByLocations = Stock::select('locations.location_name as location_name', DB::raw('SUM(product_quantity) as total_quantity'))
             ->join('locations', 'stocks.location_id', '=', 'locations.location_id')
             ->groupBy('stocks.location_id', 'locations.location_name')
             ->get();
     
-        return view('home', compact('getQtyByLocations'));
-    }    
+        // Fetch all locations
+        $locations = Location::all();
+    
+        // Initialize an empty array to store data for each location
+        $locationData = [];
+    
+        // Loop through each location
+        foreach ($locations as $location) {
+            // Fetch sectors and their quantities for the current location
+            $sectors = Sector::join('stocks', 'sectors.sector_id', '=', 'stocks.sector_id')
+                ->where('stocks.location_id', $location->location_id)
+                ->select('sectors.sector_id', 'stocks.product_quantity')
+                ->get();
+    
+            // Fetch products and their quantities for the current location
+            $products = Product::join('stocks', 'products.product_id', '=', 'stocks.product_id')
+                ->where('stocks.location_id', $location->location_id)
+                ->select('products.product_name', 'stocks.product_quantity')
+                ->get();
+    
+            // Store the data for the current location
+            $locationData[$location->location_name] = [
+                'location' => $location,
+                'sectors' => $sectors,
+                'products' => $products,
+            ];
+        }
+    
+        // Pass all data to the view
+        return view('home', compact('getQtyByLocations', 'locationData'));
+    }
+    
 }
