@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->unsignedInteger('product_id')->autoIncrement();
             $table->string('product_name', 150)->notNullable()->unique();
-            $table->string('product_category', 50)->nullable();
         });
     }
 
