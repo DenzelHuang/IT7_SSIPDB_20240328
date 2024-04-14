@@ -1,21 +1,16 @@
 <!-- He who is contented is rich. - Laozi -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product</title>
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('css/Stylesheet.css') }}">
+@extends('header')
+@section('title', 'Product Shipment')
+@section('styling')
     <style>
-        /* Product */
-        .product-body {
+        /* Paste the styling from the "Shipment Index" page here */
+        /* Shipment */
+        .shipment-body {
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
             align-items: center;
         }
-        .product-box {
+        .shipment-box {
             padding: 20px;
             border: 1px solid black;
             background-color: ghostwhite;
@@ -24,7 +19,7 @@
             overflow-x: scroll;
             overflow-y: scroll;
         }
-        .product-list {
+        .shipment-list {
             height: 100%;
             border-top: 1px solid black;
             border-bottom: 1px solid black;
@@ -32,42 +27,36 @@
             overflow: hidden;
             overflow-y: scroll;
         }
-        .product-box::-webkit-scrollbar,
-        .product-list::-webkit-scrollbar {
+        .shipment-box::-webkit-scrollbar,
+        .shipment-list::-webkit-scrollbar {
             display: none;
         } 
-        .product-list th:nth-child(2),
-        .product-list td:nth-child(2) {
-            width: 75%;
-        }
-        .product-list th:nth-child(3),
-        .product-list td:nth-child(3) {
-            width: 15%;
-        }
-        .product-list table,
-        .product-list tr,
-        .product-list th,
-        .product-list td {
+        .shipment-list table,
+        .shipment-list tr,
+        .shipment-list th,
+        .shipment-list td {
             border: 1px solid black;
         }
-        .product-list table {
+        .shipment-list table {
             margin-top: -1px;
             margin-bottom: -1px;
             padding: 0;
             width: 100%;
         }
-        .product-list th, 
-        .product-list td {
+        .shipment-list th, 
+        .shipment-list td {
             text-align: center;
         }
     </style>
-</head> 
-<body class="product-body">
-    @include('header')
+@endsection
 
-    <div class="product-box container">
+@section('shipment_active', 'active')
+
+@section('content')
+<div class="shipment-body">
+    <div class="shipment-box container">
         <h3>Product Shipment ID: {{ $id }}</h3>
-        <div class="product-list">
+        <div class="shipment-list">
             <table>
                 <tr>
                     <th>ID</th>
@@ -85,7 +74,6 @@
         </div>
         <a href="{{ route('shipment.index') }}" class="btn btn-primary mt-2">Back</a>
     </div>
-
-    @include('footer')
-</body>
-</html>
+</div>
+@include('footer')
+@endsection

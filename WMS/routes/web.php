@@ -18,7 +18,8 @@ Route::get('/error', function() {
 });
 
 // Home
-Route::get("/home", [NavigationController::class, "home"]);
+// Route::get("/home", [NavigationController::class, "home"]);
+Route::get('/home', [ProductController::class, 'getQtyByLocationChart']);
 
 // Accounts
 Route::get('/login', [AccountController::class, 'login'])->name('login');

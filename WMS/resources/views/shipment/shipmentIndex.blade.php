@@ -1,19 +1,12 @@
 <!-- He who is contented is rich. - Laozi -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shipment</title>
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('css/Stylesheet.css') }}">
+@extends('header')
+@section('title', 'Shipment Index')
+@section('styling')
     <style>
         /* Shipment */
         .shipment-body {
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
             align-items: center;
         }
         .shipment-box {
@@ -54,9 +47,14 @@
             text-align: center;
         }
     </style>
-</head> 
-<body class="shipment-body">
-    @include('header')
+@endsection
+@section('scripts')
+@endsection
+
+@section('shipment_active', 'active')
+
+@section('content')
+<div class="shipment-body">
     <div class="shipment-box container">
         <h3>Shipment Index</h3>
         <div class="shipment-list">
@@ -85,9 +83,8 @@
                 @endforeach
             </table>
         </div>
-        <a href="{{ route('shipment.form') }}" class="btn btn-primary mt-2">Add</a>
+        <a href="{{ route('shipment.form') }}" class="btn btn-primary mt-2">Form</a>
     </div>
-
-    @include('footer')
-</body>
-</html>
+</div>
+@include('footer')
+@endsection

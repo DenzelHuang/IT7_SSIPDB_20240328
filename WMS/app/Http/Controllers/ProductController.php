@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Stock;
+use App\Models\Sector;
+use App\Models\Location;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -103,4 +105,13 @@ class ProductController extends Controller
         // Redirect back to the products page with a success message
         return redirect('/products')->with('success', 'Product added successfully.');
     }
+
+    public function getQtyByLocationChart() {
+        $getQtyByLocations = Stock::select('locations.location_name as location_name', DB::raw('SUM(product_quantity) as total_quantity'))
+            ->join('locations', 'stocks.location_id', '=', 'locations.location_id')
+            ->groupBy('stocks.location_id', 'locations.location_name')
+            ->get();
+    
+        return view('home', compact('getQtyByLocations'));
+    }    
 }

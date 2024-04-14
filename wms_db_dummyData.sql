@@ -1,3 +1,4 @@
+-- Active: 1709598714114@@127.0.0.1@3306@wms_project
 CREATE DATABASE wms_project;
 
 CREATE TABLE products(
@@ -85,6 +86,32 @@ INSERT INTO products (product_name) VALUES ('Solvent Solution - 1 L bottle');
 INSERT INTO products (product_name) VALUES ('Copper Shavings - 500g bag');
 INSERT INTO products (product_name) VALUES ('Panel Board - 120x60x1 cm');
 INSERT INTO products (product_name) VALUES ('Oxidizing Agent - 750 ml bottle');
+
+-- I use this alter table because the migration didn't work
+ALTER TABLE products
+ADD product_category VARCHAR(50);
+
+UPDATE products SET product_category = 'metal' WHERE product_name IN (
+    'Assorted Metal Shavings - 1 kg bag',
+    'Steel Filings - 500g bag',
+    'Mixed Metal Alloys - 750g bag',
+    'Brass Shavings - 250g bag',
+    'Copper Shavings - 500g bag'
+);
+UPDATE products SET product_category = 'wood' WHERE product_name IN (
+    'Plywood Sheet - 100x100x1 cm',
+    'Hardwood Plank - 50x50x1 cm',
+    'Lumber Block - 25x25x1 cm',
+    'Laminated Particle Board - 75x75x1 cm',
+    'Panel Board - 120x60x1 cm'
+);
+UPDATE products SET product_category = 'chemical' WHERE product_name IN (
+    'Hydrogen Peroxide - 1 L bottle',
+    'Industrial Cleaning Solution - 2 L bottle',
+    'Acidic Solution - 500 ml bottle',
+    'Solvent Solution - 1 L bottle',
+    'Oxidizing Agent - 750 ml bottle'
+);
 
 INSERT INTO locations (location_name) VALUES ('Jakarta');
 INSERT INTO locations (location_name) VALUES ('Surabaya');

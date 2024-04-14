@@ -8,10 +8,11 @@
         @yield('title')
     </title>
     <link rel="stylesheet" href="{{ asset('css/Stylesheet.css') }}">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @yield('styling')
     @yield('scripts')
-</head>
+</head> 
 <body>
     <div class="container-flex col-12 sticky-top" style="background-color: white">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">

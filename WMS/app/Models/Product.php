@@ -15,6 +15,8 @@ class Product extends Model
 
     protected $fillable = [
         'product_name',// Add any other columns you want to be fillable
+        'product_quantity',
+        'location_id'
     ];
 
     public $timestamps = false; // Disable timestamps
