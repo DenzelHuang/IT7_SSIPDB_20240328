@@ -19,26 +19,78 @@ class ProductController extends Controller
         if ($search) {
             $products->where('product_name', 'LIKE', "%{$search}%");
         }
-        $products = $products->get();
 
+        $products = $products->get();
+    
         // Get the count of rows
         $rowCount = $products->count();
-
+    
         // Query to get the total stock for each product
         $totalStocks = Stock::select('product_id', DB::raw('SUM(product_quantity) as total_stock'))
-                            ->groupBy('product_id')
-                            ->pluck('total_stock', 'product_id');
+            ->whereHas('location', function ($query) {
+                $query->whereNull('deleted_at'); // Exclude soft-deleted locations
+            })
+            ->whereHas('sector', function ($query) {
+                $query->whereNull('deleted_at'); // Exclude soft-deleted sectors
+            })
+            ->groupBy('product_id')
+            ->pluck('total_stock', 'product_id');
     
         return view('product.index', compact('products', 'totalStocks', 'rowCount'));
     }
+    
+    // Create
+    public function create() {
+        return view('product.create');
+    }
+    
+    public function store(Request $request) {
+        // Validate the request data
+        $request->validate([
+            'productName' => 'required|string|max:255',
+            'productImage' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+    
+        // Check if there's a soft-deleted product with the same name
+        $existingProduct = Product::withTrashed()->where('product_name', $request->input('productName'))->first();
+    
+        if ($existingProduct) {
+            // Restore the soft-deleted product
+            $existingProduct->restore();
+        } else {
+            // Create a new product
+            $product = new Product();
+            $product->product_name = $request->input('productName');
+            $product->save();
+    
+            if ($request->hasFile('productImage')) {
+                $imagePath = $request->file('productImage')->store('products', 'public');
+    
+                $productImage = new ProductImage();
+                $productImage->product_id = $product->product_id;
+                $productImage->product_image = $imagePath;
+                $productImage->save();
+            }
+        }
+    
+        // Redirect back to the products page with a success message
+        return redirect('/products')->with('success-' . ($existingProduct ? $existingProduct->product_id : $product->product_id), 'Product added successfully.');
+    }
 
+    // Show the edit page
     public function edit($productId) {
         $product = Product::findOrFail($productId);
         return view('product.edit', compact('product'));
     }
 
+    // Update the product
     public function update(Request $request, $productId) {
         $product = Product::findOrFail($productId);
+
+        $request->validate([
+            'productName' => 'required|string|max:255',
+            'productImage' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
         // Update product name
         $product->product_name = $request->input('productName');
@@ -66,44 +118,18 @@ class ProductController extends Controller
         return redirect('/products')->with('success-' . $productId, 'Product updated successfully.');
     }
 
-    public function destroy($productId) {
+    // Show the delete page
+    public function delete($productId) {
         $product = Product::findOrFail($productId);
-        return view('product.delete_confirmation', compact('product'));
+
+        return view('product.delete', compact('product'));
     }
 
-    public function deleteConfirmed($productId)
-    {
+    // Delete product upon confirmation
+    public function deleteConfirmed(Request $request, $productId) {
         $product = Product::findOrFail($productId);
-        $product->delete();
-        return redirect('/products')->with('success', 'Product deleted successfully.');
-    }
-
-    public function create() {
-        return view('product.create');
-    }
-
-    public function store(Request $request) {
-        // Validate the request data
-        $request->validate([
-            'productName' => 'required|string|max:255',
-            'productImage' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        $product = new Product();
-        $product->product_name = $request->input('productName');
-        $product->save();
-
-        if ($request->hasFile('productImage')) {
-            $imagePath = $request->file('productImage')->store('products', 'public');
-
-            $productImage = new ProductImage();
-            $productImage->product_id = $product->product_id;
-            $productImage->product_image = $imagePath;
-            $productImage->save();
-        }        
-
-        // Redirect back to the products page with a success message
-        return redirect('/products')->with('success', 'Product added successfully.');
+        $product->delete(); // Soft delete the product
+        return redirect('/products');
     }
 
     public function getDataForHomePage()
