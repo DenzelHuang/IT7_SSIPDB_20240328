@@ -50,10 +50,24 @@ class ShipmentController extends Controller
 
                 // Increment or decrement stock
                 if ($shipment_type === "IN") {
-                    Stock::where('product_id', $product_id)
-                    ->where('location_id', $location)
-                    ->where('sector_id', $sector)
-                    ->increment('product_quantity', $product_quantity);
+                    // Check if a stock record associated with the target sector exists
+                    $existingStock = Stock::where('product_id', $product_id)
+                                        ->where('location_id', $location)
+                                        ->where('sector_id', $sector)
+                                        ->first();
+                
+                    // If no stock record exists for the target sector, create a new one
+                    if (!$existingStock) {
+                        $newStock = new Stock();
+                        $newStock->product_id = $product_id;
+                        $newStock->location_id = $location;
+                        $newStock->sector_id = $sector;
+                        $newStock->product_quantity = $product_id;
+                        $newStock->save();
+                    } else {
+                        // Otherwise, add the product quantity to the existing stock record
+                        $existingStock->increment('product_quantity', $product_id);
+                    }
                 } elseif ($shipment_type === "OUT") {
                     Stock::where('product_id', $product_id)
                     ->where('location_id', $location)
