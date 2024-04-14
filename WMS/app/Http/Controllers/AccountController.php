@@ -27,7 +27,7 @@ class AccountController extends Controller
 
         if ($account && $password === $account->password) {
             // The username and password match, you can authenticate the user here
-            return view('home');
+            return redirect('/home');
         } else {
             // The username or password do not match
             return view('error');

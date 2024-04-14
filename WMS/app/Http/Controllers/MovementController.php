@@ -57,15 +57,15 @@ class MovementController extends Controller {
     
         // Deduct the product quantity from the origin sector
         Stock::where('product_id', $productId)
-             ->where('location_id', $originLocationId)
-             ->where('sector_id', $originSectorId)
-             ->decrement('product_quantity', $productQuantity);
+            ->where('location_id', $originLocationId)
+            ->where('sector_id', $originSectorId)
+            ->decrement('product_quantity', $productQuantity);
     
         // Check if a stock record associated with the target sector exists
         $existingStock = Stock::where('product_id', $productId)
-                              ->where('location_id', $targetLocationId)
-                              ->where('sector_id', $targetSectorId)
-                              ->first();
+                            ->where('location_id', $targetLocationId)
+                            ->where('sector_id', $targetSectorId)
+                            ->first();
     
         // If no stock record exists for the target sector, create a new one
         if (!$existingStock) {

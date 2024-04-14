@@ -27,8 +27,8 @@
 @section('home_active', 'active')
 
 @section('content')
-<div>
-    <div class="text-center mx">
+<div class="container-flex mx-5">
+    <div class="text-center">
         <h1>Home Page</h1>
         <h3>This is a home page</h3>
         <p class="m-0">Dummy Text Dummy Text Dummy Text</p>
@@ -36,55 +36,60 @@
         <p class="m-0">Dummy Text Dummy Text Dummy Text</p>
     </div>
 
-    <h4 class="chart-segments-title mt-4">Location Stocks Chart</h4>
-    <div id="chart-segment-1" class="segments mt-2 mb-4 d-flex justify-content-center align-item-center">
-        <svg id="pie-chart-container" class="pie-chart-container"></svg>
+    <div class="container col-9">
+        <h4 class="chart-segments-title mt-4">Location Stocks Chart</h4>
+        <div id="chart-segment-1" class="segments mt-2 mb-4 d-flex justify-content-center align-item-center">
+            <svg id="pie-chart-container" class="pie-chart-container"></svg>
+        </div>    
     </div>
 
-    <h3 id="container mt-4">Locations Data</h3>
-    @foreach ($locationData as $locationName => $locationItem)
-    <h4 class="container">{{ $locationName }} Data</h4>
-    <div class="locations-data-tables d-flex container">
-        <!-- Table 1 -->
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Product Name</th>
-                    <th>Product Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($locationItem['products'] as $product)
+    <div class="container col-9">
+        <h3 id="container mt-4">Locations Data</h3>
+        @foreach ($locationData as $locationName => $locationItem)
+        <h4 class="container">{{ $locationName }} Data</h4>
+        <div class="locations-data-tables d-flex container">
+            <!-- Table 1 -->
+            <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td>{{ $product->product_name }}</td>
-                        <td>{{ $product->product_quantity }}</td>
+                        <th>Product Name</th>
+                        <th>Product Quantity</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <!-- Table 2 -->
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Sector ID</th>
-                    <th>Total Product Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($locationItem['sectors']->groupBy('sector_id') as $sectorId => $sectors)
+                </thead>
+                <tbody>
+                    @foreach ($locationItem['products'] as $product)
+                        <tr>
+                            <td>{{ $product->product_name }}</td>
+                            <td>{{ $product->product_quantity }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <!-- Table 2 -->
+            <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td>{{ $sectorId }}</td>
-                        <td>{{ $sectors->sum('product_quantity') }}</td>
+                        <th>Sector ID</th>
+                        <th>Total Product Quantity</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-    @endforeach
-
-    <!-- Include the footer -->
-    @include('footer')
+                </thead>
+                <tbody>
+                    @foreach ($locationItem['sectors']->groupBy('sector_id') as $sectorId => $sectors)
+                        <tr>
+                            <td>{{ $sectorId }}</td>
+                            <td>{{ $sectors->sum('product_quantity') }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        @endforeach
+    
+    </div>    
 </div>
+
+<!-- Include the footer -->
+@include('footer')
 
 <script>
     // Data
