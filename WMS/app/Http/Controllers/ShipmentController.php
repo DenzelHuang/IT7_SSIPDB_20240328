@@ -66,7 +66,7 @@ class ShipmentController extends Controller
                         $newStock->save();
                     } else {
                         // Otherwise, add the product quantity to the existing stock record
-                        $existingStock->increment('product_quantity', $product_id);
+                        $existingStock->increment('product_quantity', $product_quantity);
                     }
                 } elseif ($shipment_type === "OUT") {
                     Stock::where('product_id', $product_id)
