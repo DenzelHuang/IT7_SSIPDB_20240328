@@ -69,25 +69,34 @@ class ProductController extends Controller
 
     public function update(Request $request, $productId) {
         $product = Product::findOrFail($productId);
-
+    
         $request->validate([
             'productName' => 'required|string|max:255',
             'productImage' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+    
+        // Update product name
         $product->update([
             'product_name' => $request->input('productName'),
         ]);
-
+    
+        // Update product image if a new image file is provided
         if ($request->hasFile('productImage')) {
             $imagePath = $request->file('productImage')->store('products', 'public');
-
-            $product->productImage()->update(['product_image' => $imagePath]);
+    
+            // Check if product has an existing image
+            if ($product->productImage) {
+                // Update existing product image
+                $product->productImage->update(['product_image' => $imagePath]);
+            } else {
+                // Create new product image if it doesn't exist
+                $product->productImage()->create(['product_image' => $imagePath]);
+            }
         }
-
+    
         return redirect('/products')->with('success-' . $productId, 'Product updated successfully.');
     }
-
+    
     public function delete($productId) {
         $product = Product::findOrFail($productId);
 
