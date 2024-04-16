@@ -57,6 +57,7 @@
 <div class="shipment-body">
     <div class="shipment-box container">
         <h3>Shipment Index</h3>
+        <a href="{{ route('shipment.form') }}" class="btn btn-primary mt-1 mb-2">Add New Shipment</a>
         <div class="shipment-list">
             <table>
                 <tr>
@@ -83,7 +84,6 @@
                 @endforeach
             </table>
         </div>
-        <a href="{{ route('shipment.form') }}" class="btn btn-primary mt-2">Form</a>
     </div>
 </div>
 @include('footer')

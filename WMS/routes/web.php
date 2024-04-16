@@ -27,7 +27,9 @@ Route::get('/home', [ProductController::class, 'getDataForHomePage']);
 // Accounts
 Route::get('/login', [AccountController::class, 'login'])->name('login');
 Route::post('/account/check', [AccountController::class, 'loginCheck']);
-Route::get("/account/edit", [AccountController::class, "edit"]);
+Route::get("/account/index", [AccountController::class, "index"])->name('account.index');
+Route::get("/account/form", [AccountController::class, "form"])->name('account.form');
+Route::post("/account/form", [AccountController::class, "form"])->name('account.form');
 
 // Products
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');

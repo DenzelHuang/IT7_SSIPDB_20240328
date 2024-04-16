@@ -11,11 +11,21 @@ class AccountController extends Controller
         return view('account/login');
     }
 
-    public function edit() {
+    public function index() {
         $accounts = Account::all();
-        return view('account/edit', [
+        return view('account/index', [
             "accounts" => $accounts,
         ]);
+    }
+
+    public function edit($id) {
+        $account = Account::find($id);
+        return view('account.edit', compact('account'));
+    }
+
+    
+    public function form() {        
+        return view('account/accountForm');
     }
 
     public function loginCheck(Request $request)

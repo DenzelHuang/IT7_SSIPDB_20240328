@@ -20,6 +20,12 @@
         }
         .locations-data-tables table {
             border: 1px solid black;
+            margin-right: 20px;
+        }
+        .locations-data-tables table td,
+        .locations-data-tables table th {
+            border-right: 1px solid black;
+            vertical-align: middle;
         }
     </style>
 @endsection
@@ -46,7 +52,7 @@
     <div class="container col-9">
         <h3 id="container mt-4">Locations Data</h3>
         @foreach ($locationData as $locationName => $locationItem)
-        <h4 class="container">{{ $locationName }} Data</h4>
+        <h4 class="container">{{ $locationName }}</h4>
         <div class="locations-data-tables d-flex container">
             <!-- Table 1 -->
             <table class="table table-striped">
@@ -84,12 +90,9 @@
             </table>
         </div>
         @endforeach
-    
     </div>    
+    @include('footer')
 </div>
-
-<!-- Include the footer -->
-@include('footer')
 
 <script>
     // Data

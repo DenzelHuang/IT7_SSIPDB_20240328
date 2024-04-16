@@ -29,7 +29,7 @@
                 <li class="nav-item"><a href="{{ url('/locations')}}" class="nav-link @yield('location_active')">Locations</a></li>
                 <li class="nav-item"><a href="{{ url('/movement') }}" class="nav-link @yield('intmvt_active')">Internal Movement</a></li>
                 <li class="nav-item"><a href="{{ url('/monitoring') }}" class="nav-link @yield('monitoring_active')">Monitoring</a></li>
-                <li class="nav-item"><a href="{{ url('account/edit') }}" class="nav-link @yield('account_active')">Accounts</a></li>
+                <li class="nav-item"><a href="{{ url('account/index') }}" class="nav-link @yield('account_active')">Accounts</a></li>
             </ul>
         </header>
     </div>

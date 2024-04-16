@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accounts</title>
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('css/Stylesheet.css') }}">
+@extends('header')
+@section('title', 'Accounts')
+@section('styling')
     <style>
         /* Accounts */
         .accounts-body {
@@ -13,7 +8,6 @@
             flex-direction: column;
             min-height: 100vh;
             align-items: center;
-            height: 420px;
         }
         .account-box {
             padding: 20px;
@@ -34,9 +28,6 @@
         .account-box::-webkit-scrollbar,
         .account-list::-webkit-scrollbar {
             display: none;
-        } 
-        .account-list * {
-            border: 1px solid black;
         }
         .account-list table {
             margin-top: -1px;
@@ -47,31 +38,37 @@
         .account-list th, 
         .account-list td {
             text-align: center;
+            border: 1px solid black;
         }
     </style>
-</head> 
-<body class="accounts-body">
-    @include('header')
+@endsection
 
+@section('content')
+<div class="accounts-body">
     <div class="account-box container">
+        <h3>Accounts Index</h3>
+        <a href="{{ route('account.form') }}" class="btn btn-primary mt-1 mb-2">Add New Account</a>
         <div class="account-list">
             <table>
                 <tr>
                     <th>ID</th>
                     <th>Username</th>
                     <th>Password</th>
+                    <th>Action</th>
                 </tr>
                 @foreach ($accounts as $account)
                 <tr>
                     <td>{{ $account->user_id }}</td>
                     <td>{{ $account->username }}</td>
                     <td>{{ $account->password }}</td>
+                    <td>
+                        <a href="{{ route('account.form', ['id' => $account->user_id]) }}">Edit</a>
+                    </td>
                 </tr>
                 @endforeach
             </table>
         </div>
     </div>
-
-    @include('footer')
-</body>
-</html>
+@include('footer')
+</div>
+@endsection
