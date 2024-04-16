@@ -8,7 +8,15 @@ use App\Models\Monitoring;
 class MonitoringController extends Controller
 {
    public function index(Request $request) {
-    $query = Monitoring::with(['product', 'originLocation', 'targetLocation']);
+    $query = Monitoring::with(['product' => function ($query) {
+                                $query->withTrashed(); // Include soft-deleted products
+                            }, 
+                            'originLocation' => function ($query) {
+                                $query->withTrashed(); // Include soft-deleted origin locations
+                            }, 
+                            'targetLocation' => function ($query) {
+                                $query->withTrashed(); // Include soft-deleted target locations
+                            }]);
 
     $this->applySearchFilters($query, $request);
 
