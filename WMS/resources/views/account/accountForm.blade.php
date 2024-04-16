@@ -29,17 +29,21 @@
 ?>
 <div class="accounts-body">
     <div class="account-form d-flex">
-        <form method="POST">
+        <form method="POST" action="{{ isset($account) ? route('account.update', ['id' => $account->user_id]) : route('account.store') }}">
+            @csrf
+            @if(isset($account))
+                @method('PUT')
+            @endif
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="email" class="form-control" id="username" value="{{ $username }}">
+                <input type="email" class="form-control" id="username" name="username" value="{{ isset($account) ? $account->username : '' }}">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" value="{{ $password }}">
+                <input type="password" class="form-control" id="password" name="password" value="{{ isset($account) ? $account->password : '' }}">
             </div>
             <div class="d-flex justify-content-evenly">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">{{ isset($account) ? 'Update' : 'Create' }}</button>
                 <a class="btn btn-secondary" href="{{ route('account.index') }}">Back</a>
             </div>
         </form>

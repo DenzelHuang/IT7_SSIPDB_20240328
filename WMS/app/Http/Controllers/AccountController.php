@@ -19,14 +19,32 @@ class AccountController extends Controller
     }
 
     public function edit($id) {
-        $account = Account::find($id);
+        $account = Account::findOrFail($id);
         return view('account.edit', compact('account'));
     }
-
     
-    public function form() {        
-        return view('account/accountForm');
+    public function form($id = null) {        
+        $account = $id ? Account::findOrFail($id) : null;
+        return view('account/accountForm', compact('account'));
     }
+
+    public function store(Request $request) {
+        // Validation
+        $request->validate([
+            'username' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+    
+        // Create new account
+        Account::create([
+            'username' => $request->username,
+            'password' => $request->password,
+        ]);
+    
+        // Redirect to index page
+        return redirect()->route('account.index')->with('success', 'Account created successfully');
+    }
+    
 
     public function loginCheck(Request $request)
     {

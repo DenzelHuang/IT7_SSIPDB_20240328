@@ -62,7 +62,7 @@
                     <td>{{ $account->username }}</td>
                     <td>{{ $account->password }}</td>
                     <td>
-                        <a href="{{ route('account.form', ['id' => $account->user_id]) }}">Edit</a>
+                        <a href="{{ route('account.edit', ['id' => $account->user_id]) }}">Edit</a>
                     </td>
                 </tr>
                 @endforeach
