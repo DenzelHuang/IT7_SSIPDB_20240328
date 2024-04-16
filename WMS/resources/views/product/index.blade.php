@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mt-4" style="height: 100%;">
-                                @if($product->productImage)
+                                @if(isset($product->productImage->product_image))
                                     <img src="{{ asset('storage/' . $product->productImage->product_image) }}" alt="Product Image" class="card-img-top">
                                 @else
                                     <span>No image available</span>

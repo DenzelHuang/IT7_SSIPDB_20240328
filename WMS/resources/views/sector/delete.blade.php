@@ -18,13 +18,13 @@
                         <input class="form-control" id="locationName" name="locationName" value="{{ $location->location_name }}" disabled>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">List of Sector ID</label>
-                        @foreach($sectors as $sector)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sectorCheckbox{{ $sector->sector_id }}" name="sectorCheckbox[]" value="{{ $sector->sector_id }}" required>
-                                <label class="form-check-label" for="sectorCheckbox{{ $sector->sector_id }}">{{ $sector->sector_id}}</label>
-                            </div>
-                        @endforeach
+                        <label for="sectorSelect" class="form-label">Sector ID</label>
+                        <select class="form-select sector-select" id="sectorSelect" name="sectorSelect">
+                            <option value="">Select sector</option>
+                            @foreach($sectors as $sector)
+                                <option value="{{ $sector->sector_id }}">{{ $sector->sector_id }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="invalid-feedback">Please select at least one sector.</div>
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteSector">

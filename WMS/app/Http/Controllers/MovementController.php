@@ -29,13 +29,13 @@ class MovementController extends Controller {
         ]);
     
         // Retrieve input data
-        $productName = $request->productName;
-        $productQuantity = $request->productQuantity;
-        $originLocationId = $request->originLocation;
-        $originSectorId = $request->originSector;
-        $targetLocationId = $request->targetLocation;
-        $targetSectorId = $request->targetSector;
-        $date = $request->date;
+        $productName = $request->input('productName');
+        $productQuantity = $request->input('productQuantity');
+        $originLocationId = $request->input('originLocation');
+        $originSectorId = $request->input('originSector');
+        $targetLocationId = $request->input('targetLocation');
+        $targetSectorId = $request->input('targetSector');
+        $date = $request->input('date');
     
         // Query the available quantity in the origin sector
         $product = Product::where('product_name', $productName)->firstOrFail();
@@ -61,37 +61,32 @@ class MovementController extends Controller {
             ->where('sector_id', $originSectorId)
             ->decrement('product_quantity', $productQuantity);
     
-        // Check if a stock record associated with the target sector exists
-        $existingStock = Stock::where('product_id', $productId)
-                            ->where('location_id', $targetLocationId)
-                            ->where('sector_id', $targetSectorId)
-                            ->first();
-    
-        // If no stock record exists for the target sector, create a new one
-        if (!$existingStock) {
-            $newStock = new Stock();
-            $newStock->product_id = $productId;
-            $newStock->location_id = $targetLocationId;
-            $newStock->sector_id = $targetSectorId;
-            $newStock->product_quantity = $productQuantity;
-            $newStock->save();
-        } else {
-            // Otherwise, add the product quantity to the existing stock record
+       // Find or create a stock record associated with the target sector
+        $existingStock = Stock::firstOrCreate(
+            [
+                'product_id' => $productId,
+                'location_id' => $targetLocationId,
+                'sector_id' => $targetSectorId
+            ],
+            ['product_quantity' => $productQuantity]
+        );
+
+        // If the stock record already exists, increment the product quantity
+        if (!$existingStock->wasRecentlyCreated) {
             $existingStock->increment('product_quantity', $productQuantity);
         }
-    
-        // Create a new Monitoring record
-        $monitoring = new Monitoring();
-        $monitoring->product_id = $productId;
-        $monitoring->product_quantity = $productQuantity;
-        $monitoring->origin_location = $originLocationId;
-        $monitoring->origin_sector = $originSectorId;
-        $monitoring->target_location = $targetLocationId;
-        $monitoring->target_sector = $targetSectorId;
-        $monitoring->date = $date;
-        $monitoring->save();
-    
+
+        // Create a new Monitoring record using mass assignment
+        $monitoring = Monitoring::create([
+            'product_id' => $productId,
+            'product_quantity' => $productQuantity,
+            'origin_location' => $originLocationId,
+            'origin_sector' => $originSectorId,
+            'target_location' => $targetLocationId,
+            'target_sector' => $targetSectorId,
+            'date' => $date,
+        ]);
+        
         return redirect('/movement');
     }    
-    
 }

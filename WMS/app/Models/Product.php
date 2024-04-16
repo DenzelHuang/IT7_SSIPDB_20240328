@@ -30,16 +30,15 @@ class Product extends Model
         // Listen for the "deleted" event on the Product model
         static::deleted(function ($product) {
             // Soft delete associated stocks
-            $product->stock()->delete();
+            $product->stocks()->delete();
         });
     }
-
 
     public function productImage() {
         return $this->hasOne(ProductImage::class, 'product_id');
     }
 
-    public function stock() {
+    public function stocks() {
         return $this->hasMany(ProductImage::class, 'product_id');
     }
 

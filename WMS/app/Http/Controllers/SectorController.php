@@ -17,8 +17,7 @@ class SectorController extends Controller
     
     // Method to get sectors dynamically upon changes in location selection
     public function getSectors(Request $request) {
-        $locationId = $request->locationId;
-        $sectors = Sector::where('location_id', $locationId)->whereNull('deleted_at')->get();
+        $sectors = Sector::where('location_id', $request->locationId)->get();
         return response()->json($sectors);
     }
 
@@ -30,32 +29,28 @@ class SectorController extends Controller
     public function delete($locationId) {
         $location = Location::findOrFail($locationId);
         $sectors = Sector::where('location_id', $locationId)->get();
-
         return view('sector.delete', compact('location', 'sectors'));
     }
 
     public function store(Request $request, $locationId) {
-        // Validate the request data
         $request->validate([
             'sectorQuantity' => 'required|numeric|min:1',
         ]);
-        $sectorQuantity = $request->sectorQuantity;
+
+        $sectorQuantity = $request->input('sectorQuantity');
 
         for ($i = 0; $i < $sectorQuantity; $i++) {
-            $sector = new Sector();
-            $sector->location_id = $locationId;
-            $sector->save();
+            Sector::create(['location_id' => $locationId]);
         }
+
         return redirect('/locations');
     }
 
     public function deleteConfirmed(Request $request) {
-        $sectorIds = $request->input('sectorCheckbox');
+        $sector = Sector::findOrFail($request->input('sectorSelect'));
 
-        foreach($sectorIds as $sectorId) {
-            $sector = Sector::where('sector_id', $sectorId);
-            $sector->delete();
-        }
+        $sector->delete();
+
         return redirect('/locations');
     }
 }

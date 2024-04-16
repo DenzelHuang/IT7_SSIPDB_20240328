@@ -9,81 +9,64 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ProductController extends Controller
+class ProductController extends Controller 
 {
     public function index(Request $request) {
         $search = $request->input('search');
-        $products = Product::query();
-    
+        $products = Product::with('productImage');
+
         // Filter products if search query is present
         if ($search) {
             $products->where('product_name', 'LIKE', "%{$search}%");
         }
 
         $products = $products->get();
-    
+
         // Get the count of rows
         $rowCount = $products->count();
-    
+
         // Query to get the total stock for each product
         $totalStocks = Stock::select('product_id', DB::raw('SUM(product_quantity) as total_stock'))
-            ->whereHas('location', function ($query) {
-                $query->whereNull('deleted_at'); // Exclude soft-deleted locations
-            })
-            ->whereHas('sector', function ($query) {
-                $query->whereNull('deleted_at'); // Exclude soft-deleted sectors
-            })
-            ->groupBy('product_id')
-            ->pluck('total_stock', 'product_id');
-    
+                        ->groupBy('product_id')
+                        ->pluck('total_stock', 'product_id');
+
         return view('product.index', compact('products', 'totalStocks', 'rowCount'));
     }
-    
-    // Create
+
     public function create() {
         return view('product.create');
     }
-    
+
     public function store(Request $request) {
-        // Validate the request data
         $request->validate([
             'productName' => 'required|string|max:255',
             'productImage' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-    
+
         // Check if there's a soft-deleted product with the same name
-        $existingProduct = Product::withTrashed()->where('product_name', $request->input('productName'))->first();
-    
-        if ($existingProduct) {
+        $product = Product::withTrashed()->firstOrCreate(
+            ['product_name' => $request->input('productName')]
+        );
+
+        if ($product->trashed()) {
             // Restore the soft-deleted product
-            $existingProduct->restore();
-        } else {
-            // Create a new product
-            $product = new Product();
-            $product->product_name = $request->input('productName');
-            $product->save();
-    
-            if ($request->hasFile('productImage')) {
-                $imagePath = $request->file('productImage')->store('products', 'public');
-    
-                $productImage = new ProductImage();
-                $productImage->product_id = $product->product_id;
-                $productImage->product_image = $imagePath;
-                $productImage->save();
-            }
+            $product->restore();
         }
-    
-        // Redirect back to the products page with a success message
-        return redirect('/products')->with('success-' . ($existingProduct ? $existingProduct->product_id : $product->product_id), 'Product added successfully.');
+
+        if ($request->hasFile('productImage')) {
+            $imagePath = $request->file('productImage')->store('products', 'public');
+
+            $product->productImage()->create(['product_image' => $imagePath]);
+        }
+
+        return redirect('/products')->with('success-' . $product->product_id, 'Product added successfully.');
     }
 
-    // Show the edit page
     public function edit($productId) {
         $product = Product::findOrFail($productId);
         return view('product.edit', compact('product'));
     }
 
-    // Update the product
     public function update(Request $request, $productId) {
         $product = Product::findOrFail($productId);
 
@@ -92,48 +75,32 @@ class ProductController extends Controller
             'productImage' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Update product name
-        $product->product_name = $request->input('productName');
+        $product->update([
+            'product_name' => $request->input('productName'),
+        ]);
 
-        // Update product image if provided
         if ($request->hasFile('productImage')) {
             $imagePath = $request->file('productImage')->store('products', 'public');
 
-            $productImage = ProductImage::where('product_id', $productId)->first();
-
-            if ($productImage) {
-                $productImage->product_image = $imagePath;
-                $productImage->save(); // Save the updated product image record
-            } else {
-                // If product image doesn't exist, create a new one
-                $productImage = new ProductImage();
-                $productImage->product_id = $productId;
-                $productImage->product_image = $imagePath;
-                $productImage->save(); // Save the new product image record
-            }
+            $product->productImage()->update(['product_image' => $imagePath]);
         }
-
-        $product->save();
 
         return redirect('/products')->with('success-' . $productId, 'Product updated successfully.');
     }
 
-    // Show the delete page
     public function delete($productId) {
         $product = Product::findOrFail($productId);
 
         return view('product.delete', compact('product'));
     }
 
-    // Delete product upon confirmation
     public function deleteConfirmed(Request $request, $productId) {
         $product = Product::findOrFail($productId);
         $product->delete(); // Soft delete the product
         return redirect('/products');
     }
 
-    public function getDataForHomePage()
-    {
+    public function getDataForHomePage() {
         // Get data for pie chart
         $getQtyByLocations = Stock::select('locations.location_name as location_name', DB::raw('SUM(product_quantity) as total_quantity'))
             ->join('locations', 'stocks.location_id', '=', 'locations.location_id')
@@ -171,5 +138,4 @@ class ProductController extends Controller
         // Pass all data to the view
         return view('home', compact('getQtyByLocations', 'locationData'));
     }
-    
 }

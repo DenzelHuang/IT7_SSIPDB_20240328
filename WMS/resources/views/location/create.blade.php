@@ -18,7 +18,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="sectorQuantity" class="form-label">Number of Sectors</label>
-                        <input type="number" class="form-control" id="sectorQuantity" name="sectorQuantity" min="0" step="1" pattern="\d+" required>
+                        <input type="number" class="form-control" id="sectorQuantity" name="sectorQuantity" min="0" step="1" pattern="\d+">
                         <div class="invalid-feedback">Please enter a number.</div>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Location</button>

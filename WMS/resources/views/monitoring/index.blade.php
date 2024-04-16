@@ -11,6 +11,9 @@
         <form action="{{ route('monitoring.index') }}" method="GET" class="mb-3">
             <div class="row">
                 <div class="col">
+                    <input type="text" class="form-control" placeholder="Product ID" name="search_product_id">
+                </div>
+                <div class="col">
                     <input type="text" class="form-control" placeholder="Product Name" name="search_product_name">
                 </div>
                 <div class="col">
@@ -25,6 +28,9 @@
                 <div class="col">
                     <input type="text" class="form-control" placeholder="Target Sector ID" name="search_target_sector">
                 </div>
+                <div class="col">
+                    <input type="date" max="9999-12-31" class="form-control" id="date" name="search_date">
+                </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>
@@ -32,6 +38,7 @@
         </form>
         <div class="d-flex justify-content-between align-items-center mb-3">
             <p class="text-muted">Showing {{ $rowCount }} results</p>
+            <a href="{{ route('monitoring.index') }}" class="btn btn-link" role="button">See all records</a>
         </div>
         <table class="table">
             <thead>
@@ -52,10 +59,26 @@
                         <td>{{ $monitoring->product_id }}</td>
                         <td>{{ $monitoring->product->product_name }}</td>
                         <td>{{ $monitoring->product_quantity }}</td>
-                        <td>{{ $monitoring->origin_location }}</td>
-                        <td>{{ $monitoring->origin_sector }}</td>
-                        <td>{{ $monitoring->target_location }}</td>
-                        <td>{{ $monitoring->target_sector }}</td>
+                        @if($monitoring->originLocation)
+                            <td>{{ $monitoring->originLocation->location_name }}</td>
+                        @else
+                            <td>N/A</td>
+                        @endif
+                        @if($monitoring->origin_sector)
+                            <td>{{ $monitoring->origin_sector }}</td>
+                        @else
+                            <td>N/A</td>
+                        @endif
+                        @if($monitoring->targetLocation)
+                            <td>{{ $monitoring->targetLocation->location_name }}</td>
+                        @else
+                            <td>N/A</td>
+                        @endif
+                        @if($monitoring->target_sector)
+                            <td>{{ $monitoring->target_sector }}</td>
+                        @else
+                            <td>N/A</td>
+                        @endif
                         <td>{{ $monitoring->date }}</td>
                     </tr>
                 @endforeach

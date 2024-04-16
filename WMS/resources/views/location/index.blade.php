@@ -44,31 +44,33 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($groupedSectors as $productId => $sectorsGroup)
-                    @if ($sectorsGroup->first()->location && !$sectorsGroup->first()->location->trashed())
-                        <tr>
-                            <td>{{ $sectorsGroup->first()->location->location_id }}</td>
-                            <td>{{ $sectorsGroup->first()->location->location_name }}</td>
-                            <td>{{ $totalSectors[$sectorsGroup->first()->location_id] ?? 0 }}</td>
-                            <td>
-                                @php $sectorIds = $sectorsGroup->pluck('sector_id')->implode(', '); @endphp
+                @foreach($locations as $location)
+                    <tr>
+                        <td>{{ $location->location_id }}</td>
+                        <td>{{ $location->location_name }}</td>
+                        <td>{{ $totalSectors[$location->location_id] ?? 0 }}</td>
+                        <td>
+                            @if(isset($groupedSectors[$location->location_id]))
+                                @php $sectorIds = $groupedSectors[$location->location_id]->pluck('sector_id')->implode(', '); @endphp
                                 {{ $sectorIds }}
-                            </td>
-                            <td>
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Action
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><a class="dropdown-item" href="{{ route('location.edit', ['locationId' => $sectorsGroup->first()->location->location_id]) }}">Edit Location Name</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('location.delete', ['locationId' => $sectorsGroup->first()->location->location_id]) }}">Delete Location</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('sector.create', ['locationId' => $sectorsGroup->first()->location->location_id]) }}">Add Sectors</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('sector.delete', ['locationId' => $sectorsGroup->first()->location->location_id]) }}">Remove Sectors</a></li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    @endif
+                            @else
+                                No sectors
+                            @endif
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Action
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="{{ route('location.edit', ['locationId' => $location->location_id]) }}">Edit Location Name</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('location.delete', ['locationId' => $location->location_id]) }}">Delete Location</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('sector.create', ['locationId' => $location->location_id]) }}">Add Sectors</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('sector.delete', ['locationId' => $location->location_id]) }}">Remove Sectors</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

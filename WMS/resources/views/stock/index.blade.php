@@ -51,18 +51,17 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($groupedStocks as $productId => $stocksGroup)
-                    @php $product = $stocksGroup->first()->product; @endphp
+                @foreach($groupedStocks as $productId =>$stocksGroup)
                     <tr>
                         <td>{{ $loop->index + 1 }}</td>
                         <td>
-                            @if (isset($product->productImage->product_image))
-                                <img src="{{ asset('storage/' . $product->productImage->product_image) }}" alt="Product Image" class="img-fluid img-thumbnail" style="max-width: 100px;">
+                            @if(isset($stocksGroup->first()->product->productImage->product_image))
+                                <img src="{{ asset('storage/' . $stocksGroup->first()->product->productImage->product_image) }}" alt="Product Image" class="img-fluid img-thumbnail" style="max-width: 100px;">
                             @else
                                 <p>Image Not Available</p>
                             @endif
                         </td>
-                        <td>{{ $product->product_name }}</td>
+                        <td>{{ $stocksGroup->first()->product->product_name }}</td>
                         <td>{{ $productId }}</td>
                         <td>{{ $totalStocks[$productId] ?? 0 }}</td>
                         <td>

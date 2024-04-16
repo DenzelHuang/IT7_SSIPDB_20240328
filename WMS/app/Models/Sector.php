@@ -21,8 +21,7 @@ class Sector extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected static function boot()
-    {
+    protected static function boot() {
         parent::boot();
 
         // Listen for the "deleted" event on the Sector model
@@ -32,7 +31,7 @@ class Sector extends Model
         });
     }
 
-    public function stock() {
+    public function stocks() {
         return $this->hasMany(Stock::class, 'sector_id');
     }
 

@@ -21,8 +21,7 @@ class Location extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected static function boot()
-    {
+    protected static function boot() {
         parent::boot();
 
         // Listen for the "deleted" event on the Location model
@@ -32,7 +31,6 @@ class Location extends Model
             $location->sectors()->delete();
         });
     }
-
 
     public function stocks() {
         return $this->hasMany(Stock::class, 'location_id');

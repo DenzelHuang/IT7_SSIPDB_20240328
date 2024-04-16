@@ -62,7 +62,7 @@ class ShipmentController extends Controller
                         $newStock->product_id = $product_id;
                         $newStock->location_id = $location;
                         $newStock->sector_id = $sector;
-                        $newStock->product_quantity = $product_id;
+                        $newStock->product_quantity = $product_quantity;
                         $newStock->save();
                     } else {
                         // Otherwise, add the product quantity to the existing stock record

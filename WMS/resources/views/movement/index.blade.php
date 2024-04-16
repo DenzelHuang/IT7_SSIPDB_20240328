@@ -43,16 +43,16 @@
         <div class="col-9 mx-auto border">
             <h2 class="text-center text-primary my-4">Internal Movement</h2>
             <div class="mx-5 py-3">
-                <form action="{{ route('movement.store') }}" method="POST" class="needs-validation" novalidate>
+                <form action="{{ route('movement.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label for="date" class="form-label">Date</label>
-                        <input type="date" max="9999-12-31" class="form-control" id="date" name="date" required>
+                        <input type="date" max="9999-12-31" class="form-control" id="date" name="date">
+                        <div class="invalid-feedback">Please enter a date.</div>
                     </div>
-                    <div class="invalid-feedback">Please enter a date.</div>
                     <div class="mb-3">
                         <label for="productName" class="form-label">Product Name</label>
-                        <input class="form-control" list="productList" id="productName" name="productName" placeholder="Type to search..." required autocomplete="off">
+                        <input class="form-control" list="productList" id="productName" name="productName" placeholder="Type to search..." autocomplete="off">
                         <datalist id="productList">
                             @foreach($products as $product)
                                 <option value="{{ $product->product_name }}">{{ $product->product_name }}</option>
@@ -62,14 +62,14 @@
                     </div>
                     <div class="mb-3">
                         <label for="productQuantity" class="form-label">Product Quantity</label>
-                        <input type="number" class="form-control" id="productQuantity" name="productQuantity" min="0" step="1" pattern="\d+" required>
+                        <input type="number" class="form-control" id="productQuantity" name="productQuantity" min="0" step="1" pattern="\d+">
                         @if ($errors->has('productQuantity'))
                             <div class="alert alert-danger" role="alert">
                                 {{ $errors->first('productQuantity') }}
                             </div>
                         @endif
+                        <div class="invalid-feedback">Please enter a quantity greater than 0.</div>
                     </div>
-                    <div class="invalid-feedback">Please enter a quantity greater than 0.</div>
                     <div class="mb-3">
                         <label for="originLocation" class="form-label">Origin Location</label>
                         <select class="form-select location-select" id="originLocation" name="originLocation">
@@ -90,8 +90,8 @@
                                 {{ $errors->first('originSector') }}
                             </div>
                         @endif
+                        <div class="invalid-feedback">Please choose a sector from the list.</div>
                     </div>
-                    <div class="invalid-feedback">Please choose a sector from the list.</div>
                     <div class="mb-3">
                         <label for="targetLocation" class="form-label">Target Location</label>
                         <select class="form-select location-select" id="targetLocation" name="targetLocation">

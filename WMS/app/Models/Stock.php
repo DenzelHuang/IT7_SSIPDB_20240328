@@ -18,8 +18,7 @@ class Stock extends Model
      * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function setKeysForSaveQuery($query)
-    {
+    protected function setKeysForSaveQuery($query) {
         $query
             ->where('product_id', '=', $this->getAttribute('product_id'))
             ->where('sector_id', '=', $this->getAttribute('sector_id'));
