@@ -7,11 +7,16 @@
 @section('content')
     <div class="container mt-5">
         <div class="col-9 mx-auto border">
-            <h2 class="text-center text-primary my-4">Add Warehouse Location</h2>
+            <h2 class="text-center text-primary my-4">Edit Location</h2>
             <div class="mx-5 py-3">
                 <form action="{{ route('location.update', ['locationId' => $location->location_id]) }}" method="POST" class="needs-validation">
                     @csrf
                     @method('PUT')
+                    @if ($errors->has('locationName'))
+                        <div class="alert alert-danger">
+                            {{ $errors->first('locationName') }}
+                        </div>
+                    @endif
                     <div class="mb-3">
                         <label for="locationName" class="form-label">Location Name</label>
                         <input class="form-control" id="locationName" name="locationName" value="{{ $location->location_name }}"required>

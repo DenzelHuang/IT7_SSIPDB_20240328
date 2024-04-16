@@ -75,10 +75,18 @@ class ProductController extends Controller
             'productImage' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
     
+        // Check if there's an existing product (including soft-deleted) with the same name
+        $existingProduct = Product::withTrashed()
+                                  ->where('product_name', $request->input('productName'))
+                                  ->first();
+    
+        // Return error if exists
+        if ($existingProduct) {
+            return redirect()->back()->withErrors(['productName' => 'A product with this name already exists.']);
+        }
+    
         // Update product name
-        $product->update([
-            'product_name' => $request->input('productName'),
-        ]);
+        $product->update(['product_name' => $request->input('productName')]);
     
         // Update product image if a new image file is provided
         if ($request->hasFile('productImage')) {

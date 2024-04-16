@@ -63,13 +63,24 @@ class LocationController extends Controller
 
     public function update(Request $request, $locationId) {
         $location = Location::findOrFail($locationId);
-
+    
         $request->validate([
             'locationName' => 'required|string|max:255',
         ]);
-
+    
+        // Check if there's an existing location (including soft-deleted) with the same name
+        $existingLocation = Location::withTrashed()
+                                    ->where('location_name', $request->input('locationName'))
+                                    ->first();
+    
+        // If an existing location with the same name exists and it's not the current location
+        if ($existingLocation) {
+            return redirect()->back()->withErrors(['locationName' => 'Location name already exists.'])->withInput();
+        }
+    
+        // Update location name
         $location->update(['location_name' => $request->input('locationName')]);
-
+    
         return redirect('/locations');
     }
 

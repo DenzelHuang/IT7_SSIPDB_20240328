@@ -12,7 +12,11 @@
                 <form action="{{ route('product.update', ['productId' => $product->product_id]) }}" method="POST" enctype="multipart/form-data" class="needs-validation">
                     @csrf
                     @method('PUT') <!-- Use PUT method for updating data -->
-
+                    @if ($errors->has('productName'))
+                        <div class="alert alert-danger">
+                            {{ $errors->first('productName') }}
+                        </div>
+                    @endif
                     <div class="mb-3">
                         <label for="productName" class="form-label">Product Name</label>
                         <input type="text" class="form-control" id="productName" name="productName" value="{{ $product->product_name }}" required>

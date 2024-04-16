@@ -66,7 +66,7 @@
                                     <li><a class="dropdown-item" href="{{ route('location.edit', ['locationId' => $location->location_id]) }}">Edit Location Name</a></li>
                                     <li><a class="dropdown-item" href="{{ route('location.delete', ['locationId' => $location->location_id]) }}">Delete Location</a></li>
                                     <li><a class="dropdown-item" href="{{ route('sector.create', ['locationId' => $location->location_id]) }}">Add Sectors</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('sector.delete', ['locationId' => $location->location_id]) }}">Remove Sectors</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('sector.delete', ['locationId' => $location->location_id]) }}">Remove Sector</a></li>
                                 </ul>
                             </div>
                         </td>
