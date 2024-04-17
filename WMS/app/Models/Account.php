@@ -10,6 +10,8 @@ class Account extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'user_id';
+
     protected $table = 'accounts';
 
     protected $fillable = [

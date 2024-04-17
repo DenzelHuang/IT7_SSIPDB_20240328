@@ -18,30 +18,60 @@ class AccountController extends Controller
         ]);
     }
 
-    public function edit($id) {
-        $account = Account::findOrFail($id);
-        return view('account.edit', compact('account'));
-    }
-    
-    public function form($id = null) {        
-        $account = $id ? Account::findOrFail($id) : null;
-        return view('account/accountForm', compact('account'));
+    public function form() {
+        return view('account/accountForm');
     }
 
-    public function store(Request $request) {
-        // Validation
-        $request->validate([
-            'username' => 'required|email',
-            'password' => 'required|min:6',
+    public function edit($id) {
+        $account = Account::where('user_id', $id)->firstOrFail();
+        return view('account/accountEdit', compact('account'));
+    }
+    
+    public function save(Request $request, $user_id) {
+        $validatedData = $request->validate([
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|max:255',
         ]);
     
-        // Create new account
-        Account::create([
-            'username' => $request->username,
-            'password' => $request->password,
+        $username = $request->input('username');
+        $password = $request->input('password');
+    
+        $account = Account::where('user_id', $user_id)->firstOrFail();
+        $account->timestamps = false;
+        $account->username = $username;
+        $account->password = $password;
+        $account->save();
+    
+        return redirect()->route('account.index');
+    }
+
+    public function delete($id) {
+        $account = Account::where('user_id', $id)->firstOrFail();
+        return view('account/accountDelete', compact('account'));
+    }
+
+    public function confirm(Request $request, $id) {
+        $account = Account::where('user_id', $id)->firstOrFail();
+        $account->delete();
+        return redirect()->route('account.index')->with('success', 'Account deleted successfully');
+    }
+
+    public function create(Request $request) {
+        $validatedData = $request->validate([
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|max:255',
         ]);
     
-        // Redirect to index page
+        $username = $request->input('username');
+        $password = $request->input('password');
+    
+        // Creating a new account
+        $account = new Account();
+        $account->timestamps = false;
+        $account->username = $username;
+        $account->password = $password;
+        $account->save();
+    
         return redirect()->route('account.index')->with('success', 'Account created successfully');
     }
     

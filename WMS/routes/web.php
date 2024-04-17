@@ -30,12 +30,11 @@ Route::get('/login', [AccountController::class, 'login'])->name('login');
 Route::post('/account/check', [AccountController::class, 'loginCheck']);
 Route::get("/account/index", [AccountController::class, "index"])->name('account.index');
 Route::get("/account/form", [AccountController::class, "form"])->name('account.form');
-Route::post("/account/form", [AccountController::class, "form"])->name('account.form');
-Route::get("/account/form", [AccountController::class, "create"])->name('account.create');
-Route::post("/account/store", [AccountController::class, "store"])->name('account.store');
+Route::post("/account/form", [AccountController::class, "create"])->name('account.create');
 Route::get("/account/edit/{id}", [AccountController::class, "edit"])->name('account.edit');
-Route::get("/account/form/{id?}", [AccountController::class, "form"])->name('account.form');
-Route::put("/account/update/{id}", [AccountController::class, "update"])->name('account.update');
+Route::post("/account/edit/{id}", [AccountController::class, "save"])->name('account.save');
+Route::get("/account/delete/{id}", [AccountController::class, "delete"])->name('account.delete');
+Route::post("/account/delete/{id}", [AccountController::class, "confirm"])->name('account.confirmDelete');
 
 // Products
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');

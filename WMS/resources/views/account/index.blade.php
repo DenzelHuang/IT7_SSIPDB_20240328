@@ -47,7 +47,7 @@
 <div class="accounts-body">
     <div class="account-box container">
         <h3>Accounts Index</h3>
-        <a href="{{ route('account.form') }}" class="btn btn-primary mt-1 mb-2">Add New Account</a>
+        <a href="{{ route('account.create') }}" class="btn btn-primary mt-1 mb-2">Add New Account</a>
         <div class="account-list">
             <table>
                 <tr>
@@ -62,7 +62,9 @@
                     <td>{{ $account->username }}</td>
                     <td>{{ $account->password }}</td>
                     <td>
-                        <a href="{{ route('account.edit', ['id' => $account->user_id]) }}">Edit</a>
+                        <a href="/account/edit/{{ $account->user_id }}">Edit</a>
+                        <span>/</span>
+                        <a href="/account/delete/{{ $account->user_id }}">Delete</a>
                     </td>
                 </tr>
                 @endforeach
