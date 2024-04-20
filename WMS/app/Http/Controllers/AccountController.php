@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
@@ -39,7 +40,7 @@ class AccountController extends Controller
         $account = Account::where('user_id', $user_id)->firstOrFail();
         $account->timestamps = false;
         $account->username = $username;
-        $account->password = $password;
+        $account->password = bcrypt($password);
         $account->save();
     
         return redirect()->route('account.index');
@@ -69,7 +70,7 @@ class AccountController extends Controller
         $account = new Account();
         $account->timestamps = false;
         $account->username = $username;
-        $account->password = $password;
+        $account->password = bcrypt($password);
         $account->save();
     
         return redirect()->route('account.index')->with('success', 'Account created successfully');
@@ -83,12 +84,12 @@ class AccountController extends Controller
 
         $account = Account::where('username', $username)->first();
 
-        if ($account && $password === $account->password) {
+        if ($account && Hash::check($password, $account->password)) {
             // The username and password match, you can authenticate the user here
             return redirect('/home');
         } else {
             // The username or password do not match
-            return view('error');
+            return redirect()->back()->withErrors(['msg' => 'Incorrect username or password']);
         }
     }
 }

@@ -49,6 +49,9 @@
                     <label for="password">Password</label>
                     <input type="password" class="form-control border-3" name="password" placeholder="Enter password" required>
                 </div>
+                @if($errors->any())
+                <span style="color: red">{{$errors->first()}}</span>
+                @endif
                 <button type="submit" class="btn btn-secondary" name="submit" value="Submit">Submit</button>
             </form>
         </div>    
