@@ -43,6 +43,8 @@
     </style>
 @endsection
 
+@section('shipment_active', 'active')
+
 @section('content')
 <div class="accounts-body">
     <div class="account-box container">
