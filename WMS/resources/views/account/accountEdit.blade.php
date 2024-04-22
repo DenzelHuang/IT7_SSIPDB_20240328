@@ -23,6 +23,8 @@
     </style>
 @endsection
 
+@section('account_active', 'active')
+
 @section('content')
 <div class="accounts-body">
     <div class="account-form d-flex">

@@ -22,9 +22,12 @@
         }
     </style>
 @endsection
+
+@section('account_active', 'active')
+
 @section('content')
 <div class="accounts-body">
-    <div class="account-form d-flex">
+    <div class="account-form d-flex mb-4">
         <form method="POST" action="{{ route('account.confirmDelete', ['id' => $account->user_id ?? '']) }}">
             @csrf
             <input type="hidden" name="id" value="{{ $account->user_id ?? '' }}">

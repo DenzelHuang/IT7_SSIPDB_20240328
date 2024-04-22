@@ -29,10 +29,10 @@ class AccountController extends Controller
     }
     
     public function save(Request $request, $user_id) {
-        $validatedData = $request->validate([
-            'username' => 'required|string|max:255',
-            'password' => 'required|string|max:255',
-        ]);
+        // $validatedData = $request->validate([
+        //     'username' => 'required|string|max:255',
+        //     'password' => 'required|string|max:255',
+        // ]);
     
         $username = $request->input('username');
         $password = $request->input('password');
