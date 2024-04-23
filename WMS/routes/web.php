@@ -14,9 +14,9 @@ use App\Http\Controllers\MovementController;
 use App\Http\Controllers\MonitoringController;
 
 // Troubleshooting
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 Route::get('/error', function() {
     return view('error');
 });
@@ -26,7 +26,7 @@ Route::get('/error', function() {
 Route::get('/home', [ProductController::class, 'getDataForHomePage']);
 
 // Accounts
-Route::get('/login', [AccountController::class, 'login'])->name('login');
+Route::get('/', [AccountController::class, 'login'])->name('login');
 Route::post('/account/check', [AccountController::class, 'loginCheck']);
 Route::get("/account/index", [AccountController::class, "index"])->name('account.index');
 Route::get("/account/form", [AccountController::class, "form"])->name('account.form');
