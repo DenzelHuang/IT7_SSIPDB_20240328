@@ -2,9 +2,14 @@
 @extends('header')
 @section('title', 'Account Create')
 @section('styling')
-    h1 {
-        color: white;
-        text-shadow: black 0px 0px 5px;
+    .selected-item {
+        margin-top: 5px;
+    }
+    button {
+        width: 100%;
+    }
+    .location-sector-group {
+        display: none;
     }
 @endsection
 
@@ -28,7 +33,6 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Create</button>
-                    <a class="btn btn-secondary" href="{{ route('account.index') }}">Back</a>
                 </form>
             </div>    
         </div>

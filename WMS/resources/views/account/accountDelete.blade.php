@@ -19,6 +19,16 @@
                     @csrf
                     <input type="hidden" name="id" value="{{ $account->user_id ?? '' }}">
                     <p>Are you sure you want to delete the account: {{ $account->username }} ?</p>
+                    
+                    {{-- Password Field --}}
+                    <div class="form-group my-2">
+                        <label for="password">Enter Password to Confirm</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                        @if($errors->any())
+                            <div class="text-danger">{{ $errors->first() }}</div>
+                        @endif
+                    </div>
+
                     <div class="d-flex justify-content-evenly">
                         <button type="submit" class="btn btn-danger">Confirm Delete</button>
                         <a class="btn btn-secondary" href="{{ route('account.index') }}">Cancel</a>

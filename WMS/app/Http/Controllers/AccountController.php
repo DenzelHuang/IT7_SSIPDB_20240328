@@ -29,22 +29,24 @@ class AccountController extends Controller
     }
     
     public function save(Request $request, $user_id) {
-        // $validatedData = $request->validate([
-        //     'username' => 'required|string|max:255',
-        //     'password' => 'required|string|max:255',
-        // ]);
-    
-        $username = $request->input('username');
-        $password = $request->input('password');
-    
         $account = Account::where('user_id', $user_id)->firstOrFail();
+        $passwordOld = $account->password;
         $account->timestamps = false;
-        $account->username = $username;
-        $account->password = bcrypt($password);
-        $account->save();
+        $username = $request->input('username');
+        $oldPassword = $request->input('old_password');
+        $newPassword = $request->input('new_password');
     
-        return redirect()->route('account.index');
-    }
+        if ($account && Hash::check($oldPassword, $passwordOld)) {
+            // The old password matches, update the username and password
+            $account->username = $username;
+            $account->password = bcrypt($newPassword);
+            $account->save();
+            return redirect()->route('account.index');
+        } else {
+            // The old password does not match
+            return redirect()->back()->withErrors('Old password does not match');
+        }    
+    }    
 
     public function delete($id) {
         $account = Account::where('user_id', $id)->firstOrFail();
@@ -53,16 +55,19 @@ class AccountController extends Controller
 
     public function confirm(Request $request, $id) {
         $account = Account::where('user_id', $id)->firstOrFail();
-        $account->delete();
-        return redirect()->route('account.index')->with('success', 'Account deleted successfully');
-    }
+        $password = $request->input('password');
+    
+        if (Hash::check($password, $account->password)) {
+            // The password matches, proceed to delete the account
+            $account->delete();
+            return redirect()->route('account.index')->with('success', 'Account deleted successfully');
+        } else {
+            // The password does not match
+            return redirect()->back()->withErrors('Password does not match');
+        }
+    }    
 
     public function create(Request $request) {
-        $validatedData = $request->validate([
-            'username' => 'required|string|max:255',
-            'password' => 'required|string|max:255',
-        ]);
-    
         $username = $request->input('username');
         $password = $request->input('password');
     

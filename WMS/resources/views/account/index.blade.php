@@ -46,14 +46,12 @@
                 <tr>
                     <th>ID</th>
                     <th>Username</th>
-                    <th>Password</th>
                     <th>Action</th>
                 </tr>
                 @foreach ($accounts as $account)
                 <tr>
                     <td>{{ $account->user_id }}</td>
                     <td>{{ $account->username }}</td>
-                    <td>{{ $account->password }}</td>
                     <td>
                         <a href="/account/edit/{{ $account->user_id }}">Edit</a>
                         <span>/</span>
