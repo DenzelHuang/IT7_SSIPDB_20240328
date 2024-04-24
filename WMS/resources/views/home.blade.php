@@ -34,14 +34,6 @@
 
 @section('content')
 <div class="container-flex mx-5">
-    <div class="text-center">
-        <h1>Home Page</h1>
-        <h3>This is a home page</h3>
-        <p class="m-0">Dummy Text Dummy Text Dummy Text</p>
-        <p class="m-0">Dummy Text Dummy Text Dummy Text</p>
-        <p class="m-0">Dummy Text Dummy Text Dummy Text</p>
-    </div>
-
     <div class="container col-9">
         <h4 class="chart-segments-title mt-4">Location Stocks Chart</h4>
         <div id="chart-segment-1" class="segments mt-2 mb-4 d-flex justify-content-center align-item-center">
