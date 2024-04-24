@@ -12,11 +12,13 @@ class ValidateShipmentRequest
     public function handle(Request $request, Closure $next)
     {
         $validator = validator()->make($request->all(), [
-            'shipment_date' => 'required|date_format:Y-m-d',
+            'shipment_date' => 'required|date_format:Y-m-d|after:yesterday',
             'shipment_type' => 'required|in:IN,OUT',
             'location_select' => 'required',
             'sector_select' => 'required',
             'selected_products' => 'required|array|min:1',
+        ], [
+            'shipment_date.after' => 'The shipment date must be today or in the future.',
         ]);
 
         // Validate product quantities if selected
