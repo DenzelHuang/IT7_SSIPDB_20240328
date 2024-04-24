@@ -25,7 +25,7 @@ class MovementController extends Controller {
             'originSector' => 'required|exists:sectors,sector_id',
             'targetLocation' => 'required|exists:locations,location_id',
             'targetSector' => 'required|exists:sectors,sector_id',
-            'date' => 'required',
+            'date' => 'required|date_format:Y-m-d|after:yesterday',
         ]);
     
         // Retrieve input data

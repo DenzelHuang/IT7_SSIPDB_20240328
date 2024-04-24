@@ -1,33 +1,34 @@
 @extends('header')
 @section('title', 'Home')
 @section('styling')
-    <style>
-        .segments {
-            background-color: #999;
-        }
-        .pie-chart-container {
-            width: 400px;
-            height: 400px;
-        }
-        table {
-            margin-bottom: 20px;
-        }
-        th {
-            background-color: grey;
-        }
-        .locations-data-tables {
-            gap: 20px;
-        }
-        .locations-data-tables table {
-            border: 1px solid black;
-            margin-right: 20px;
-        }
-        .locations-data-tables table td,
-        .locations-data-tables table th {
-            border-right: 1px solid black;
-            vertical-align: middle;
-        }
-    </style>
+    p {
+        text-shadow: black 0px 0px 5px;
+    }
+    .segments {
+        background-color: #ffffff;
+    }
+    .pie-chart-container {
+        width: 400px;
+        height: 400px;
+    }
+    table {
+        margin-bottom: 20px;
+    }
+    th {
+        background-color: grey;
+    }
+    .locations-data-tables {
+        gap: 20px;
+    }
+    .locations-data-tables table {
+        border: 1px solid black;
+        margin-right: 20px;
+    }
+    .locations-data-tables table td,
+    .locations-data-tables table th {
+        border-right: 1px solid black;
+        vertical-align: middle;
+    }
 @endsection
 
 @section('home_active', 'active')
@@ -35,16 +36,16 @@
 @section('content')
 <div class="container-flex mx-5">
     <div class="container col-9">
-        <h4 class="chart-segments-title mt-4">Location Stocks Chart</h4>
+        <p class="h4 chart-segments-title mt-4" style="color: white">Location Stocks Chart</p>
         <div id="chart-segment-1" class="segments mt-2 mb-4 d-flex justify-content-center align-item-center">
             <svg id="pie-chart-container" class="pie-chart-container"></svg>
         </div>    
     </div>
 
     <div class="container col-9">
-        <h3 id="container mt-4">Locations Data</h3>
+        <p class="h3" id="container mt-4" style="color: white">Locations Data</p>
         @foreach ($locationData as $locationName => $locationItem)
-        <h4 class="container">{{ $locationName }}</h4>
+        <p class="container h4" style="color: white">{{ $locationName }}</p>
         <div class="locations-data-tables d-flex container">
             <!-- Table 1 -->
             <table class="table table-striped">
@@ -83,8 +84,8 @@
         </div>
         @endforeach
     </div>    
-    @include('footer')
 </div>
+@include('footer')
 
 <script>
     // Data

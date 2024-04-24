@@ -1,11 +1,17 @@
 @extends('header')
 @section('title', 'Delete Warehouse Location')
+@section('styling')
+    h1, #result-count {
+        color: white;
+        text-shadow: black 0px 0px 5px;
+    }
+@endsection
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
 @section('content')
     <div class="container mt-5">
-        <div class="col-9 mx-auto border">
+        <div class="col-9 mx-auto border" id="form-container">
             <h2 class="text-center text-primary my-4">Delete Warehouse Location</h2>
             <div class="mx-5 py-3">
                 <form action="{{ route('location.deleteConfirmed', ['locationId' => $location->location_id]) }}" method="POST">

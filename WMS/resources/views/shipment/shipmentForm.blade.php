@@ -1,17 +1,15 @@
 @extends('header')
 @section('title', 'Shipment Form')
 @section('styling')
-    <style>
-        .selected-item {
-            margin-top: 5px;
-        }
-        button {
-            width: 100%;
-        }
-        .location-sector-group {
-        display: none;
-        }
-    </style>
+    .selected-item {
+        margin-top: 5px;
+    }
+    button {
+        width: 100%;
+    }
+    .location-sector-group {
+    display: none;
+    }
 @endsection
 @section('scripts')
     <!-- Bootstrap JS, jQuery, and custom script -->
@@ -120,10 +118,10 @@
 @section('shipment_active', 'active')
 
 @section('content')
-    <div class="container mt-5">
-        <div class="col-9 mx-auto border">
+    <div class="container my-5">
+        <div class="col-9 mx-auto border" id="form-container">
             <h2 class="text-center text-primary my-4">Add Shipment</h2>
-            <div class="mx-5 py-3">
+            <div class="mx-5 my-5">
                 <form id="dynamicForm" method="POST">
                     @csrf
                     @if(session('errors'))

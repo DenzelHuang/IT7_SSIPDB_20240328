@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/Stylesheet.css') }}">
     <style>
         html, body {
+            background-color: #7882ae;
             height: 100%;
             margin: 0;
             display: flex;

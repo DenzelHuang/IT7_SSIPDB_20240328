@@ -1,12 +1,22 @@
 @extends('header')
 @section('title', 'Edit Product')
+@section('styling')
+    h1 {
+        color: white;
+        text-shadow: black 0px 0px 5px;
+    }
+    #form-container {
+        background-color: white;
+        border-radius: 10px;
+    }
+@endsection
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
 @endsection
 @section('content')
     <div class="container mt-5">
-        <div class="col-9 mx-auto border">
+        <div class="col-9 mx-auto border" id="form-container">
             <h2 class="text-center text-primary my-4">Edit Product</h2>
             <div class="mx-5 py-3">
                 <form action="{{ route('product.update', ['productId' => $product->product_id]) }}" method="POST" enctype="multipart/form-data" class="needs-validation">

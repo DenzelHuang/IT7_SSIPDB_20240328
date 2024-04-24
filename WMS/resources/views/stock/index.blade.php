@@ -5,7 +5,14 @@
 @section('stock_active', 'active')
 
 @section('styling')
-
+    h1, #result-count, #see-all-link {
+        color: white;
+        text-shadow: black 0px 0px 5px;
+    }
+    #table-container {
+        background-color:white;
+        border-radius: 10px; 
+    }
 @endsection
 
 @section('scripts')
@@ -36,65 +43,67 @@
             </div>
         </form>
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <p class="text-muted">Showing {{ $rowCount }} results</p>
-            <a href="{{ route('stock.index') }}" class="btn btn-link" role="button">See all stocks</a>
+            <p id="result-count">Showing {{ $rowCount }} results</p>
+            <a href="{{ route('stock.index') }}" class="btn btn-link" role="button" id="see-all-link">See all stocks</a>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Product Image</th>
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Product ID</th>
-                    <th scope="col">Total Stock</th>
-                    <th scope="col">Warehouse Stock</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($groupedStocks as $productId =>$stocksGroup)
+        <div id="table-container" class="container-flex border px-3 py-3">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ $loop->index + 1 }}</td>
-                        <td>
-                            @if(isset($stocksGroup->first()->product->productImage->product_image))
-                                <img src="{{ asset('storage/' . $stocksGroup->first()->product->productImage->product_image) }}" alt="Product Image" class="img-fluid img-thumbnail" style="max-width: 100px;">
-                            @else
-                                <p>Image Not Available</p>
-                            @endif
-                        </td>
-                        <td>{{ $stocksGroup->first()->product->product_name }}</td>
-                        <td>{{ $productId }}</td>
-                        <td>{{ $totalStocks[$productId] ?? 0 }}</td>
-                        <td>
-                            <div class="accordion" id="accordionLocations{{ $productId }}">
-                                @foreach($stocksGroup->groupBy('location_id') as $locationId => $locationStocks)
-                                    @php $location = $locationStocks->first()->location; @endphp
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingLocation{{ $locationId }}">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLocation{{ $productId }}_{{ $locationId }}" aria-expanded="false" aria-controls="collapseLocation{{ $productId }}_{{ $locationId }}">
-                                                {{ $location->location_name }}: {{ $locationStocks->sum('product_quantity') }}
-                                            </button>
-                                        </h2>
-                                        <div id="collapseLocation{{ $productId }}_{{ $locationId }}" class="accordion-collapse collapse" aria-labelledby="headingLocation{{ $locationId }}" data-bs-parent="#accordionLocations{{ $productId }}">
-                                            <div class="accordion-body">
-                                                <ul>
-                                                    @foreach($locationStocks->groupBy('sector_id') as $sectorId => $sectorStocks)
-                                                        <li>
-                                                            @foreach($sectorStocks as $stock)
-                                                                Sector {{ $sectorId }} : {{ $stock->product_quantity }}
-                                                            @endforeach
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
+                        <th scope="col">#</th>
+                        <th scope="col">Product Image</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Total Stock</th>
+                        <th scope="col">Warehouse Stock</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($groupedStocks as $productId =>$stocksGroup)
+                        <tr>
+                            <td>{{ $loop->index + 1 }}</td>
+                            <td>
+                                @if(isset($stocksGroup->first()->product->productImage->product_image))
+                                    <img src="{{ asset('storage/' . $stocksGroup->first()->product->productImage->product_image) }}" alt="Product Image" class="img-fluid img-thumbnail" style="max-width: 100px;">
+                                @else
+                                    <p>Image Not Available</p>
+                                @endif
+                            </td>
+                            <td>{{ $stocksGroup->first()->product->product_name }}</td>
+                            <td>{{ $productId }}</td>
+                            <td>{{ $totalStocks[$productId] ?? 0 }}</td>
+                            <td>
+                                <div class="accordion" id="accordionLocations{{ $productId }}">
+                                    @foreach($stocksGroup->groupBy('location_id') as $locationId => $locationStocks)
+                                        @php $location = $locationStocks->first()->location; @endphp
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingLocation{{ $locationId }}">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLocation{{ $productId }}_{{ $locationId }}" aria-expanded="false" aria-controls="collapseLocation{{ $productId }}_{{ $locationId }}">
+                                                    {{ $location->location_name }}: {{ $locationStocks->sum('product_quantity') }}
+                                                </button>
+                                            </h2>
+                                            <div id="collapseLocation{{ $productId }}_{{ $locationId }}" class="accordion-collapse collapse" aria-labelledby="headingLocation{{ $locationId }}" data-bs-parent="#accordionLocations{{ $productId }}">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        @foreach($locationStocks->groupBy('sector_id') as $sectorId => $sectorStocks)
+                                                            <li>
+                                                                @foreach($sectorStocks as $stock)
+                                                                    Sector {{ $sectorId }} : {{ $stock->product_quantity }}
+                                                                @endforeach
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>       
+                                    @endforeach
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
     @include('footer')
 @endsection

@@ -1,6 +1,12 @@
 @extends('header')
 @section('title', 'Product')
 @section('product_active', 'active')
+@section('styling')
+    h1 {
+        color: white;
+        text-shadow: black 0px 0px 5px;
+    }
+@endsection
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
@@ -9,7 +15,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <h1 class="text-center mb-4">Products</h1>
-                <p class="text-end mb-3">{{ $rowCount }} results found</p>
+                <p class="text-end mb-3" style="color: white; text-shadow: black 0px 0px 5px;">{{ $rowCount }} results found</p>
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="mb-3">
                         <a href="{{ route('product.create') }}" class="btn btn-primary">
@@ -55,7 +61,7 @@
                             @if (isset($totalStocks[$product->product_id]))
                                 <p class="card-text mt-4">In Stock: {{ $totalStocks[$product->product_id] }}</p>
                             @else
-                                 <p class="card-text mt-4">Out of Stock</p>
+                                <p class="card-text mt-4">Out of Stock</p>
                             @endif
                             <div class="mt-auto">
                                 <a href="{{ route('stock.index') }}?search_product_id={{ $product->product_id }}" class="btn btn-primary">Stock Details</a>
