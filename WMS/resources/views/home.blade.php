@@ -6,6 +6,7 @@
     }
     .segments {
         background-color: #ffffff;
+        border-radius: 10px;
     }
     .pie-chart-container {
         width: 700px;
@@ -37,7 +38,7 @@
 <div class="container-flex mx-5">
     <div class="container col-9">
         <p class="h4 chart-segments-title mt-4" style="color: white">Location Stocks Chart</p>
-        <div id="chart-segment-1" class="segments mt-2 mb-4 d-flex justify-content-center align-item-center">
+        <div id="chart-segment-1" class="segments mt-2 mb-4 d-flex justify-content-center align-item-center border">
             <svg id="pie-chart-container" class="pie-chart-container"></svg>
         </div>    
     </div>
@@ -48,8 +49,8 @@
         <p class="container h4" style="color: white">{{ $locationName }}</p>
         <div class="locations-data-tables d-flex container">
             <!-- Table 1 -->
-            <table class="table table-striped">
-                <thead>
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
                     <tr>
                         <th>Product Name</th>
                         <th>Product Quantity</th>
@@ -65,8 +66,8 @@
                 </tbody>
             </table>
             <!-- Table 2 -->
-            <table class="table table-striped">
-                <thead>
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
                     <tr>
                         <th>Sector ID</th>
                         <th>Total Product Quantity</th>

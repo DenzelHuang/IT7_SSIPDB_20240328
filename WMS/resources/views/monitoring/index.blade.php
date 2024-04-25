@@ -51,8 +51,8 @@
             <a href="{{ route('monitoring.index') }}" class="btn btn-link" role="button" id="see-all-link">See all records</a>
         </div>
         <div id="table-container" class="container-flex border px-3 py-3">
-            <table class="table">
-                <thead>
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
                     <tr>
                         <th scope="col">Product ID</th>
                         <th scope="col">Product Name</th>

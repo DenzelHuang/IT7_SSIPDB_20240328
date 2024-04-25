@@ -47,8 +47,8 @@
             <a href="{{ route('stock.index') }}" class="btn btn-link" role="button" id="see-all-link">See all stocks</a>
         </div>
         <div id="table-container" class="container-flex border px-3 py-3">
-            <table class="table">
-                <thead>
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Product Image</th>
@@ -58,7 +58,7 @@
                         <th scope="col">Warehouse Stock</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="table-group-divider">
                     @foreach($groupedStocks as $productId =>$stocksGroup)
                         <tr>
                             <td>{{ $loop->index + 1 }}</td>

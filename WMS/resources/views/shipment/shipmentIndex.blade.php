@@ -2,83 +2,57 @@
 @extends('header')
 @section('title', 'Shipment Index')
 @section('styling')
-    .shipment-body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    h1 {
+        color: white;
+        text-shadow: black 0px 0px 5px;
     }
-    .shipment-box {
-        padding: 20px;
-        border: 1px solid black;
-        background-color: ghostwhite;
-        border-radius: 20px;
-        overflow: hidden;
-        overflow-x: scroll;
-        overflow-y: scroll;
-    }
-    .shipment-list {
-        height: 100%;
-        border-top: 1px solid black;
-        border-bottom: 1px solid black;
-        border-collapse: collapse;
-        overflow: hidden;
-        overflow-y: scroll;
-    }
-    .shipment-box::-webkit-scrollbar,
-    .shipment-list::-webkit-scrollbar {
-        display: none;
-    } 
-    .shipment-list table,
-    .shipment-list tr,
-    .shipment-list th,
-    .shipment-list td {
-        border: 1px solid black;
-    }
-    .shipment-list table {
-        margin-top: -1px;
-        margin-bottom: -1px;
-        padding: 0;
-        width: 100%;
-    }
-    .shipment-list th, 
-    .shipment-list td {
-        text-align: center;
+    #table-container {
+        background-color:white;
+        border-radius: 10px; 
     }
 @endsection
-@section('scripts')
-@endsection
-
 @section('shipment_active', 'active')
 
 @section('content')
-<div class="shipment-body my-5">
-    <div class="shipment-box container">
-        <h3>Shipment Index</h3>
-        <a href="{{ route('shipment.form') }}" class="btn btn-primary mt-1 mb-2">Add New Shipment</a>
+<div class="container my-5">
+    <h1 class="text-center mb-4">Shipments</h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <a href="{{ route('shipment.form') }}" class="btn btn-primary mt-1 mb-2">
+                <img src="{{ asset('images/green-add-icon.png') }}" alt="Add Icon" style="width: 20px; height: auto;">
+                <span>Create New Shipment</span>
+            </a>
+        </div>
+    </div>
+    <div id="table-container" class="container-flex border px-3 py-3">
         <div class="shipment-list">
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Date</th>
-                    <th>Type</th>
-                    <th>Origin_location</th>
-                    <th>Origin_sector</th>
-                    <th>Target_location</th>
-                    <th>Target_sector</th>
-                    <th>Action</th>
-                </tr>
-                @foreach ($shipments as $shipment)
-                <tr>
-                    <td>{{ $shipment->shipment_id }}</td>
-                    <td>{{ $shipment->shipment_date }}</td>
-                    <td>{{ $shipment->shipment_type }}</td>
-                    <td>{{ $shipment->origin_location }}</td>
-                    <td>{{ $shipment->origin_sector }}</td>
-                    <td>{{ $shipment->target_location }}</td>
-                    <td>{{ $shipment->target_sector }}</td>
-                    <td><a href="{{ route('shipment.product', ['id' => $shipment->shipment_id]) }}">Show</a></td>
-                </tr>
-                @endforeach
+            <table class="table">
+                <table class="table table-striped table-hover align-middle">
+                    <thead class="table-dark">
+                        <th scope="col">ID</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Origin_location</th>
+                        <th scope="col">Origin_sector</th>
+                        <th scope="col">Target_location</th>
+                        <th scope="col">Target_sector</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($shipments as $shipment)
+                        <tr>
+                            <td>{{ $shipment->shipment_id }}</td>
+                            <td>{{ $shipment->shipment_date }}</td>
+                            <td>{{ $shipment->shipment_type }}</td>
+                            <td>{{ $shipment->origin_location }}</td>
+                            <td>{{ $shipment->origin_sector }}</td>
+                            <td>{{ $shipment->target_location }}</td>
+                            <td>{{ $shipment->target_sector }}</td>
+                            <td><a href="{{ route('shipment.product', ['id' => $shipment->shipment_id]) }}">Show</a></td>
+                        </tr>
+                    @endforeach
+                </tbody>
             </table>
         </div>
     </div>
