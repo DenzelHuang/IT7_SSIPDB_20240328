@@ -1,13 +1,6 @@
 <!-- Smile, breathe, and go slowly. - Thich Nhat Hanh -->
 @extends('header')
 @section('title', 'Delete Account')
-@section('styling')
-    h1 {
-        color: white;
-        text-shadow: black 0px 0px 5px;
-    }
-@endsection
-
 @section('account_active', 'active')
 
 @section('content')

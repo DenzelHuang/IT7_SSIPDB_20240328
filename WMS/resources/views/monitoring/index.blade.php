@@ -1,16 +1,6 @@
 @extends('header')
 @section('title', 'Monitoring')
 @section('monitoring_active', 'active')
-@section('styling')
-    h1, #result-count, #see-all-link {
-        color: white;
-        text-shadow: black 0px 0px 5px;
-    }
-    #table-container {
-        background-color:white;
-        border-radius: 10px; 
-    }
-@endsection
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script> 
 @endsection
@@ -42,13 +32,13 @@
                     <input type="date" max="9999-12-31" class="form-control" id="date" name="search_date">
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-primary">Search</button>
+                    <button type="submit" class="btn btn-primary" id="search">Search</button>
                 </div>
             </div>
         </form>
         <div class="d-flex justify-content-between align-items-center mb-3">
             <p id="result-count">Showing {{ $rowCount }} results</p>
-            <a href="{{ route('monitoring.index') }}" class="btn btn-link" role="button" id="see-all-link">See all records</a>
+            <a href="{{ route('monitoring.index') }}" class="btn btn-primary" role="button" id="see-all-link">See all records</a>
         </div>
         <div id="table-container" class="container-flex border px-3 py-3">
             <table class="table table-striped table-hover align-middle">

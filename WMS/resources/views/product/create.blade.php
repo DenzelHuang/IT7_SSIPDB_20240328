@@ -1,11 +1,5 @@
 @extends('header')
 @section('title', 'Add Product')
-@section('styling')
-    h1 {
-        color: white;
-        text-shadow: black 0px 0px 5px;
-    }
-@endsection
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="{{ asset('js/custom.js') }}"></script>

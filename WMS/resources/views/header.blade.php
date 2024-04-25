@@ -31,6 +31,14 @@
             background-color: white;
             border-radius: 10px;
         }
+        h1, #result-count, #see-all-link, #search, .active {
+        color: white;
+        text-shadow: black 0px 0px 5px;
+        }
+        #table-container {
+            background-color:white;
+            border-radius: 10px; 
+        }
         @yield('styling');
     </style>
     @yield('scripts')
