@@ -24,12 +24,12 @@
                     @csrf
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" value="{{ $account->username ?? ''}}">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" value="{{ $user->username ?? ''}}">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="password" name="password" placeholder="Enter password" value="{{ $account->password ?? ''}}" aria-describedby="toggle-password">
+                            <input type="text" class="form-control" id="password" name="password" placeholder="Enter password" value="{{ $user->password ?? ''}}" aria-describedby="toggle-password">
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Create</button>

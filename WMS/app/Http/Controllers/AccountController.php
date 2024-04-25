@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Account;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
@@ -13,9 +14,9 @@ class AccountController extends Controller
     }
 
     public function index() {
-        $accounts = Account::all();
+        $users = User::all();
         return view('account/index', [
-            "accounts" => $accounts,
+            "users" => $users,
         ]);
     }
 
@@ -24,43 +25,54 @@ class AccountController extends Controller
     }
 
     public function edit($id) {
-        $account = Account::where('user_id', $id)->firstOrFail();
-        return view('account/accountEdit', compact('account'));
+        $user = User::where('id', $id)->firstOrFail();
+        return view('account/accountEdit', compact('user'));
     }
     
-    public function save(Request $request, $user_id) {
-        $account = Account::where('user_id', $user_id)->firstOrFail();
-        $passwordOld = $account->password;
-        $account->timestamps = false;
+    public function save(Request $request, $id) {
+        $user = User::where('id', $id)->firstOrFail();
+        $passwordCurrent = $user->password;
+        $user->timestamps = false;
         $username = $request->input('username');
-        $oldPassword = $request->input('old_password');
+        $password = $request->input('password');
         $newPassword = $request->input('new_password');
+
+        // Check if username already exists
+        if ($username != $user->username) {
+            $existingUsername = User::where('username', $username)->first();
+            if ($existingUsername) {
+                return redirect()->back()->withErrors('Username already exists');
+            }
+        }
+        
     
-        if ($account && Hash::check($oldPassword, $passwordOld)) {
+        if ($user && Hash::check($password, $passwordCurrent)) {
             // The old password matches, update the username and password
-            $account->username = $username;
-            $account->password = bcrypt($newPassword);
-            $account->save();
+            $user->username = $username;
+            if (!empty($newPassword)) {
+                $user->password = bcrypt($newPassword);
+            }
+            $user->save();
             return redirect()->route('account.index');
         } else {
             // The old password does not match
-            return redirect()->back()->withErrors('Old password does not match');
+            return redirect()->back()->withErrors('Current password does not match');
         }    
     }    
 
     public function delete($id) {
-        $account = Account::where('user_id', $id)->firstOrFail();
+        $user = User::where('id', $id)->firstOrFail();
         return view('account/accountDelete', compact('account'));
     }
 
     public function confirm(Request $request, $id) {
-        $account = Account::where('user_id', $id)->firstOrFail();
+        $user = User::where('id', $id)->firstOrFail();
         $password = $request->input('password');
     
-        if (Hash::check($password, $account->password)) {
+        if (Hash::check($password, $user->password)) {
             // The password matches, proceed to delete the account
-            $account->delete();
-            return redirect()->route('account.index')->with('success', 'Account deleted successfully');
+            $user->delete();
+            return redirect()->route('account.index')->with('success', 'User deleted successfully');
         } else {
             // The password does not match
             return redirect()->back()->withErrors('Password does not match');
@@ -72,11 +84,11 @@ class AccountController extends Controller
         $password = $request->input('password');
     
         // Creating a new account
-        $account = new Account();
-        $account->timestamps = false;
-        $account->username = $username;
-        $account->password = bcrypt($password);
-        $account->save();
+        $user = new User();
+        $user->timestamps = false;
+        $user->username = $username;
+        $user->password = bcrypt($password);
+        $user->save();
     
         return redirect()->route('account.index')->with('success', 'Account created successfully');
     }
@@ -84,17 +96,20 @@ class AccountController extends Controller
 
     public function loginCheck(Request $request)
     {
-        $username = $request->input('username');
-        $password = $request->input('password');
+        $credentials = $request->only('username', 'password');
 
-        $account = Account::where('username', $username)->first();
-
-        if ($account && Hash::check($password, $account->password)) {
+        if (Auth::attempt($credentials)) {
             // The username and password match, you can authenticate the user here
             return redirect('/home');
         } else {
             // The username or password do not match
             return redirect()->back()->withErrors(['msg' => 'Incorrect username or password']);
         }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
     }
 }

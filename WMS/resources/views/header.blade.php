@@ -51,7 +51,8 @@
                 <li class="nav-item"><a style="color: white" href="{{ url('/locations')}}" class="nav-link @yield('location_active')">Locations</a></li>
                 <li class="nav-item"><a style="color: white" href="{{ url('/movement') }}" class="nav-link @yield('intmvt_active')">Internal Movement</a></li>
                 <li class="nav-item"><a style="color: white" href="{{ url('/monitoring') }}" class="nav-link @yield('monitoring_active')">Monitoring</a></li>
-                <li class="nav-item"><a style="color: white" href="{{ url('account/index') }}" class="nav-link @yield('account_active')">Accounts</a></li>
+                <li class="nav-item"><a style="color: white" href="{{ url('/account/index') }}" class="nav-link @yield('account_active')">Accounts</a></li>
+                <li class="nav-item"><a style="color: white" href="{{ url('/logout') }}" class="nav-link">Logout</a></li>
             </ul>
         </header>
     </div>

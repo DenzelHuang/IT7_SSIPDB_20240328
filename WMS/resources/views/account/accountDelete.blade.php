@@ -15,10 +15,10 @@
         <div class="col-9 mx-auto border" id="form-container">
             <h2 class="text-center text-primary mt-4">Delete Account</h2>
             <div class="mx-5 py-3">
-                <form method="POST" action="{{ route('account.confirmDelete', ['id' => $account->user_id ?? '']) }}">
+                <form method="POST" action="{{ route('account.confirmDelete', ['id' => $user->id ?? '']) }}">
                     @csrf
-                    <input type="hidden" name="id" value="{{ $account->user_id ?? '' }}">
-                    <p>Are you sure you want to delete the account: {{ $account->username }} ?</p>
+                    <input type="hidden" name="id" value="{{ $user->id ?? '' }}">
+                    <p>Are you sure you want to delete the account: {{ $user->username }} ?</p>
                     
                     {{-- Password Field --}}
                     <div class="form-group my-2">

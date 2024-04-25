@@ -20,24 +20,24 @@
         <div class="col-9 mx-auto border" id="form-container">
             <h2 class="text-center text-primary my-4">Edit Account</h2>
             <div class="mx-5 my-5">
-                <form method="POST" action="/account/edit/{{ $account->user_id ?? '' }}">
+                <form method="POST" action="/account/edit/{{ $user->id ?? '' }}">
                     @csrf
                     {{-- Username Field --}}
-                    <div class="form-group my-2">
+                    <div class="form-group my-3">
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" value="{{ $account->username ?? '' }}">
+                        <input type="text" class="form-control" id="username" name="username" value="{{ $user->username ?? '' }}" placeholder="Enter Username">
                     </div>
 
-                    {{-- Old Password Field --}}
-                    <div class="form-group my-2">
-                        <label for="old-password">Old Password</label>
-                        <input type="password" class="form-control" id="old-password" name="old_password">
+                    {{-- Password Field --}}
+                    <div class="form-group my-3">
+                        <label for="old-password">Enter password to edit account</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
                     </div>
 
                     {{-- New Password Field --}}
-                    <div class="form-group my-2">
+                    <div class="form-group my-3">
                         <label for="new-password">New Password</label>
-                        <input type="password" class="form-control" id="new-password" name="new_password">
+                        <input type="password" class="form-control" id="new-password" name="new_password" placeholder="Enter New Password - leave empty to leave unchanged">
                     </div>
 
                     {{-- Submit Button --}}

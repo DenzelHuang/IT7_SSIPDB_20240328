@@ -48,14 +48,14 @@
                     <th>Username</th>
                     <th>Action</th>
                 </tr>
-                @foreach ($accounts as $account)
+                @foreach ($users as $user)
                 <tr>
-                    <td>{{ $account->user_id }}</td>
-                    <td>{{ $account->username }}</td>
+                    <td>{{ $user->id }}</td>
+                    <td>{{ $user->username }}</td>
                     <td>
-                        <a href="/account/edit/{{ $account->user_id }}">Edit</a>
+                        <a href="/account/edit/{{ $user->id }}">Edit</a>
                         <span>/</span>
-                        <a href="/account/delete/{{ $account->user_id }}">Delete</a>
+                        <a href="/account/delete/{{ $user->id }}">Delete</a>
                     </td>
                 </tr>
                 @endforeach

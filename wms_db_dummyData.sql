@@ -101,9 +101,9 @@ INSERT INTO sectors (location_id) VALUES (3);
 INSERT INTO sectors (location_id) VALUES (3);
 INSERT INTO sectors (location_id) VALUES (3);
 
-INSERT INTO accounts (username, password) VALUES ('denzel', 'admin');
-INSERT INTO accounts (username, password) VALUES ('diego', 'admin');
-INSERT INTO accounts (username, password) VALUES ('sarah', 'admin');
+INSERT INTO users (username, password) VALUES ('denzel', '$2y$12$Fh7ax95XehlwqzuHmTcLwu2Dvb7j/MKpyT4T3I8jRXFrclyppLAGu');
+INSERT INTO users (username, password) VALUES ('diego', '$2y$12$Fh7ax95XehlwqzuHmTcLwu2Dvb7j/MKpyT4T3I8jRXFrclyppLAGu');
+INSERT INTO users (username, password) VALUES ('sarah', '$2y$12$Fh7ax95XehlwqzuHmTcLwu2Dvb7j/MKpyT4T3I8jRXFrclyppLAGu');
 
 INSERT INTO shipments (shipment_date, shipment_type, target_location, target_sector) VALUES ('2024-01-01', 'IN', '1', '1');
 INSERT INTO shipments (shipment_date, shipment_type, target_location, target_sector) VALUES ('2024-01-01', 'IN', '1', '2');
