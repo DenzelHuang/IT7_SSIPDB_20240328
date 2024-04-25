@@ -19,6 +19,11 @@ return new class extends Migration
             $table->foreign('product_id')->references('product_id')->on('products');
             $table->foreign('location_id')->references('location_id')->on('locations');
             $table->foreign('sector_id')->references('sector_id')->on('sectors');
+            $table->primary([
+                'product_id',
+                'location_id',
+                'sector_id',
+            ]);
         });
     }
 
