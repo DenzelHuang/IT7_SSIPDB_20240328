@@ -8,7 +8,7 @@
         background-color: #ffffff;
     }
     .pie-chart-container {
-        width: 400px;
+        width: 700px;
         height: 400px;
     }
     table {
@@ -139,8 +139,10 @@
         })
         .attr("dy", ".35em")
         .attr("text-anchor", "middle")
+        .style("font-size", "16px") // Adjust font size as needed
+        .style("font-weight", "bold") // Set font weight to bold
         .text(function(d) { 
-            return d.data.location_name + " (" + d.data.total_quantity + ", " + formatPercent(d.data.total_quantity / d3.sum(data, function(d) { return d.total_quantity; })) + ")";
+            return "(" + d.data.total_quantity + ", " + formatPercent(d.data.total_quantity / d3.sum(data, function(d) { return d.total_quantity; })) + ")";
         });
 
     // Add legend
