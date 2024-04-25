@@ -19,7 +19,7 @@
     <div class="container mt-5">
         <div class="col-9 mx-auto border" id="form-container">
             <h2 class="text-center text-primary my-4">Create new account</h2>
-            <div class="mx-5 py-3">
+            <div class="mx-5 mb-3 py-3">
                 <form method="POST" action="{{ route('account.create') }}">
                     @csrf
                     <div class="mb-3">
