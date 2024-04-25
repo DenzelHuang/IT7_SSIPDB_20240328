@@ -38,8 +38,8 @@ class AccountController extends Controller
         $newPassword = $request->input('new_password');
 
         // Check if username already exists
-        if ($username != $user->username) {
-            $existingUsername = User::where('username', $username)->first();
+        if (strcasecmp(trim($username), trim($user->username)) !== 0) {
+            $existingUsername = User::where('username', 'LIKE', $username)->first();
             if ($existingUsername) {
                 return redirect()->back()->withErrors('Username already exists');
             }

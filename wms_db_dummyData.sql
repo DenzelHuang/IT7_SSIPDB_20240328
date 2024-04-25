@@ -78,7 +78,7 @@ INSERT INTO products (product_name) VALUES ('Steel Filings - 500g bag');
 INSERT INTO products (product_name) VALUES ('Hardwood Plank - 50x50x1 cm');
 INSERT INTO products (product_name) VALUES ('Industrial Cleaning Solution - 2 L bottle');
 INSERT INTO products (product_name) VALUES ('Mixed Metal Alloys - 750g bag');
-INSERT INTO products (product_name) VALUES ('Lumber Block - 25x25x1 cm ');
+INSERT INTO products (product_name) VALUES ('Lumber Block - 25x25x1 cm');
 INSERT INTO products (product_name) VALUES ('Acidic Solution - 500 ml bottle');
 INSERT INTO products (product_name) VALUES ('Brass Shavings - 250g bag');
 INSERT INTO products (product_name) VALUES ('Laminated Particle Board - 75x75x1 cm');

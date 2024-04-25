@@ -78,9 +78,9 @@ class ProductController extends Controller
         $productName = $request->input('productName');
     
         // Check if there's an existing product (including soft-deleted) with the same name
-        if ($productName != $product->product_name) {
+        if (strcasecmp(trim($productName), trim($product->product_name)) !== 0) {
             $existingProduct = Product::withTrashed()
-                                        ->where('product_name', $productName)
+                                        ->where('product_name', 'LIKE', $productName)
                                         ->first();
 
             // Return error if exists
