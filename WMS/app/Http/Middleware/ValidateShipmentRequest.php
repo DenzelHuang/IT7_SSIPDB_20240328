@@ -18,16 +18,18 @@ class ValidateShipmentRequest
             'sector_select' => 'required',
             'selected_products' => 'required|array|min:1',
         ], [
-            'shipment_date.after' => 'The shipment date must be today or in the future.',
+            'shipment_date.after' => 'The shipment date must either be today or in the future.',
+            'shipment_type.required' => 'Select a shipment type.',
+            'location_select.required' => 'A location must be selected.',
+            'sector_select.required' => 'A sector must be selected.',
+            'selected_products.required' => 'Select at least one product.'
         ]);
 
         // Validate product quantities if selected
         $selected_products = $request->input('selected_products', []);
         foreach ($selected_products as $product_id) {
-            if ($request->input($product_id) < 1) {
-                $validator->sometimes($product_id, 'required|integer|min:1', function ($input) use ($product_id) {
-                    return in_array($product_id, $input['selected_products']);
-                });    
+            if ($request->input($product_id) < 1 || empty($request->input($product_id))) {
+                return redirect()->back()->withInput()->withErrors(["Product quantity cannot be empty or less than 1"]);
             }
         }
 
@@ -46,7 +48,8 @@ class ValidateShipmentRequest
                 $quantityRequested = $productQuantities[$productId];
                 if ($stock < $quantityRequested) {
                     // Return error response if stock is insufficient
-                    return redirect()->back()->withInput()->withErrors(["Not enough stock available for product with ID {$productId}"]);
+                    $product = Product::where('product_id', $productId)->first(); 
+                    return redirect()->back()->withInput()->withErrors(["Not enough stock available for ({$product->product_name})"]);
                 }
             }
         }
