@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>
-        @yield('title')
+        WMS | @yield('title')
     </title>
     <link rel="stylesheet" href="{{ asset('css/Stylesheet.css') }}">
     <script src="https://d3js.org/d3.v7.min.js"></script>
