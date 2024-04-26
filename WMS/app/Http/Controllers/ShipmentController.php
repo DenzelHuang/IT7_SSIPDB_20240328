@@ -16,8 +16,10 @@ class ShipmentController extends Controller
 
     public function getAll() {
         $shipments = Shipment::all();
+        $locations = Location::all();
         return view("shipment/shipmentIndex", [
             "shipments" => $shipments,
+            "locations" => $locations,
         ]);
     }
 

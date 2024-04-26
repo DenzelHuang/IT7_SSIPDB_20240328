@@ -32,10 +32,33 @@
                             <td>{{ $shipment->shipment_id }}</td>
                             <td>{{ $shipment->shipment_date }}</td>
                             <td>{{ $shipment->shipment_type }}</td>
-                            <td>{{ $shipment->origin_location }}</td>
-                            <td>{{ $shipment->origin_sector }}</td>
-                            <td>{{ $shipment->target_location }}</td>
-                            <td>{{ $shipment->target_sector }}</td>
+                            <td>
+                                @if ($shipment->origin_location)
+                                    {{ $locations->where('location_id', $shipment->origin_location)->first()->location_name }}
+                                @else
+                                    N/A
+                                @endif
+                            </td>
+                            <td>
+                                @if ($shipment->origin_sector)
+                                    {{ $shipment->origin_sector }}
+                                @else
+                                    N/A
+                                @endif
+                            </td>
+                            <td>
+                                @if ($shipment->target_location)
+                                    {{ $locations->where('location_id', $shipment->target_location)->first()->location_name }}</td>
+                                @else
+                                    N/A
+                                @endif
+                            <td>
+                                @if ($shipment->target_sector)
+                                    {{ $shipment->target_sector }}
+                                @else
+                                    N/A
+                                @endif
+                            </td>
                             <td><a href="{{ route('shipment.product', ['id' => $shipment->shipment_id]) }}">Show Products</a></td>
                         </tr>
                     @endforeach
