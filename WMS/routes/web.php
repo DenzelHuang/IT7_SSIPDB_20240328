@@ -13,6 +13,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MovementController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Middleware\AuthenticateUser;
+use App\Http\Middleware\LoginRedirect;
 
 // Troubleshooting
 // Route::get('/', function () {
@@ -22,14 +23,13 @@ Route::get('/error', function() {
     return view('error');
 });
 
-Route::get('/', [AccountController::class, 'login'])->name('login');
+Route::get('/', [AccountController::class, 'login'])->middleware(LoginRedirect::class)->name('login');
 Route::post('/account/check', [AccountController::class, 'loginCheck']);
 Route::get('/logout', [AccountController::class, 'logout']);
 
 Route::middleware(AuthenticateUser::class)->group(function () {
     // Home
-    // Route::get("/home", [NavigationController::class, "home"]);
-    Route::get('/home', [ProductController::class, 'getDataForHomePage']);
+    Route::get('/home', [ProductController::class, 'getDataForHomePage'])->name('home');
 
     // Accounts
     Route::get("/account/index", [AccountController::class, "index"])->name('account.index');
