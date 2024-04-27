@@ -1,5 +1,6 @@
 @extends('header')
 @section('title', 'Edit Warehouse Location')
+@section('location_active', 'active')
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="{{ asset('js/custom.js') }}"></script>

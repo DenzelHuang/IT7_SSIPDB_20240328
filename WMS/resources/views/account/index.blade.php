@@ -27,7 +27,7 @@
                             <td>{{ $user->username }}</td>
                             <td>
                                 <a href="/account/edit/{{ $user->id }}">Edit</a>
-                                <span>/</span>
+                                <span>|</span>
                                 <a href="/account/delete/{{ $user->id }}">Delete</a>
                             </td>
                         </tr>

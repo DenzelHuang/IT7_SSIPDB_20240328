@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Middleware\ValidateAccount;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
-use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\StockController;
