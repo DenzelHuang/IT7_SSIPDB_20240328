@@ -5,6 +5,7 @@ The report is within the Google Docs document: https://docs.google.com/document/
 
 To access the document, be sure you are logged in using your PU email. 
 
+Don't forget to first run the migrations!
 System deployment note: After creating a database, manually create an account with an SQL query:
 
 The query for creating an account with;
