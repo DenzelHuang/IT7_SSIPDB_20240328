@@ -19,7 +19,8 @@ class LocationController extends Controller
 
         $groupedSectors = $sectors->groupBy('location_id');
 
-        $locations = Location::all();
+        // Apply the same filters to the locations query
+        $locations = Location::whereIn('location_id', $sectors->pluck('location_id'))->get();
 
         $rowCount = $groupedSectors->count();
 
