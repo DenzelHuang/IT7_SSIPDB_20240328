@@ -81,6 +81,12 @@ class AccountController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
     
+        // Check if username already exists
+        $existingUsername = User::where('username', 'LIKE', $username)->first();
+        if ($existingUsername) {
+            return redirect()->back()->withErrors('Username already exists');
+        }
+        
         // Creating a new account
         $user = new User();
         $user->timestamps = false;

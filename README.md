@@ -27,4 +27,8 @@ Use the INSERT INTO queries included within the dummy sql file for a quick start
 
 
 // Note 4
+Access the login page in localhost:8000
+
+
+// Note 5
 Sample product images are included within the provided folder.

@@ -32,6 +32,9 @@
                             <input type="text" class="form-control" id="password" name="password" placeholder="Enter password" value="{{ $user->password ?? ''}}" aria-describedby="toggle-password">
                         </div>
                     </div>
+                    @if($errors->any())
+                        <div class="text-danger my-3">{{ $errors->first() }}</div>
+                    @endif
                     <button type="submit" class="btn btn-primary">Create</button>
                 </form>
             </div>    
